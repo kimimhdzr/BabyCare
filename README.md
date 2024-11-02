@@ -103,17 +103,17 @@ For any questions, issues, or contributions, feel free to contact:
 
 - **Name**: Aman Iskandar
 - **Email**: [@gmail.com](mailto:amaniskandar04@gmail.com)
-- **LinkedIn**: [linkedin.com/in/](https://www.linkedin.com/in/aman-iskandar-mohamad-dzulhaidi-723932249/)
+- **LinkedIn**: [linkedin.com/in/aman-iskandar](https://www.linkedin.com/in/aman-iskandar-mohamad-dzulhaidi-723932249/)
 
 - **Name**: Hafiz Adha
 - **Email**: [@gmail.com](mailto:hafizadhaazahari@gmail.com)
-- **LinkedIn**: [linkedin.com/in/](https://www.linkedin.com/in/hafiz-adha-bin-mohd-azahari-7871262ab/)
+- **LinkedIn**: [linkedin.com/in/hafiz-adha](https://www.linkedin.com/in/hafiz-adha-bin-mohd-azahari-7871262ab/)
 
 - **Name**: Wan Muhammad Hisham
 - **Email**: [@gmail.com](mailto:whisham04@gmail.com)
-- **LinkedIn**: [linkedin.com/in/](https://www.linkedin.com/in/wan-muhammad-hisham-bin-md-edlan-jafny-ba8aa929b/)
+- **LinkedIn**: [linkedin.com/in/WMH](https://www.linkedin.com/in/wan-muhammad-hisham-bin-md-edlan-jafny-ba8aa929b/)
 
 - **Name**: Irfan Adlan
 - **Email**: [@gmail.com](mailto:)
-- **LinkedIn**: [linkedin.com/in/](https://www.linkedin.com/in/muhammad-irfan-9b3615294/)
+- **LinkedIn**: [linkedin.com/in/irfan-adlan](https://www.linkedin.com/in/muhammad-irfan-9b3615294/)
 
