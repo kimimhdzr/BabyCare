@@ -1,6 +1,6 @@
-# BabyCrae Connect
+# BabyCare Connect
 
-BabyCrae Connect is a .
+BabyCare Connect is a .
 
 ## Table of Contents
 - [Features](#features)
