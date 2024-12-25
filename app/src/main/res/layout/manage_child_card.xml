@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="340dp"
+    android:layout_height="70dp"
+    android:background="@color/white">
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/baby_pfp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/homelander"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#C2D6F6"
+            />
+        
+        <TextView
+            android:id="@+id/baby_name"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Baby Aman"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="16sp"/>
+        
+        <ImageButton
+            android:layout_marginLeft="4dp"
+            android:layout_width="65dp"
+            android:padding="2dp"
+            android:layout_height="30dp"
+            android:src="@drawable/edit_icon"
+            android:background="@drawable/gray_button"/>
+
+        <ImageButton
+            android:layout_width="65dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="6dp"
+            android:padding="4dp"
+            android:src="@drawable/bin_svgrepo_com"
+            android:background="@drawable/red_button"/>
+
+
+
+
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/gray_line"
+        />
+
+    
+
+
+</FrameLayout>
