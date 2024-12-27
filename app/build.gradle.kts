@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -42,16 +43,19 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.play.services.maps)
+    implementation(libs.firebase.database)
+    implementation(libs.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation ("androidx.fragment:fragment:1.6.1")
-    implementation("com.facebook.android:facebook-login:latest.release")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation ("androidx.fragment:fragment:1.8.5")
+    implementation("com.facebook.android:facebook-login:17.0.2")
     implementation("androidx.credentials:credentials:1.5.0-beta01")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
-    implementation("com.google.android.gms:play-services-auth:20.4.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.google.firebase:firebase-auth:22.1.2")
 
 
 
