@@ -1,5 +1,7 @@
 package com.example.babycare;
 
+import static android.content.Intent.getIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.babycare.R;
+import com.example.babycare.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -115,9 +119,9 @@ public class CompleteAcc extends Fragment {
             if (task.isSuccessful()) {
                 Toast.makeText(getContext(), "Registration successful", Toast.LENGTH_LONG).show();
                 StoreDatabase();
-                Intent intent = new Intent(getActivity(), Home_Page.class);
+                Intent intent = getActivity().getIntent();
+                getActivity().finish();
                 startActivity(intent);
-                requireActivity().finish(); // Close the current activity
             } else {
                 Toast.makeText(getContext(), "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -161,7 +165,7 @@ public class CompleteAcc extends Fragment {
     public void StoreDatabase(){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User");
 
-        String userId = databaseReference.push().getKey(); // Or use FirebaseAuth.getInstance().getCurrentUser().getUid()
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if (userId != null) {
             // Create a new User object with the input data
@@ -171,11 +175,11 @@ public class CompleteAcc extends Fragment {
             databaseReference.child(userId).setValue(user)
                     .addOnSuccessListener(aVoid -> {
                         // Handle success
-                        Toast.makeText(getContext(), "User registered successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "User registered successfully!", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         // Handle failure
-                        Toast.makeText(getContext(), "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Registration failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
     }

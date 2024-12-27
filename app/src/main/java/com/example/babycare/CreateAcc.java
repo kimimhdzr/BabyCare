@@ -4,7 +4,6 @@ import static android.app.Activity.RESULT_OK;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -22,17 +21,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 
+import com.example.babycare.R;
+import com.example.babycare.CompleteAcc;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.security.SecureRandom;
-import java.util.Base64;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 ;
 
@@ -96,36 +98,8 @@ public class CreateAcc extends Fragment {
                 Boolean PassValid = verifyPass();
 
                 String email = String.valueOf(input_email.getText());
-                String pass = String.valueOf(input_conf.getText());
+                checkIfUsernameExists(email);
 
-                if(PassValid && !email.isEmpty() &&!pass.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches() ){
-                    Bundle bundle = new Bundle();
-                    bundle.putString("input_email", email);
-                    bundle.putString("input_password", pass);
-
-                    Fragment newFrag = new CompleteAcc();
-                    newFrag.setArguments(bundle);
-
-                    // Assuming this is inside a Fragment
-                    getParentFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, newFrag)
-                            .addToBackStack(null)
-                            .commit();
-
-                }else{
-                    if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                        input_email.setError("Valid email required");
-                        input_email.requestFocus();
-                        return;
-                    }
-
-                    if (pass.isEmpty() || pass.length() < 6) {
-                        input_password.setError("Password must be at least 6 characters");
-                        input_password.requestFocus();
-                        return;
-                    }
-                }
             }
         });
 
@@ -198,6 +172,76 @@ public class CreateAcc extends Fragment {
 
         return true;
 
+    }
+
+    public void checkIfUsernameExists(String email) {
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("User");
+
+        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean usernameExists = false;
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String username = snapshot.child("email").getValue(String.class);
+                    if (username != null && username.equals(email)) {
+                        usernameExists = true;
+                        break;
+                    }
+                }
+
+
+                if (usernameExists) {
+                    // Username already exists
+                    input_email.setError("Email has already registered");
+                    input_email.requestFocus();
+                }else{
+                    String pass = String.valueOf(input_password.getText());
+                    boolean PassValid = verifyPass();
+
+                    if(PassValid && !email.isEmpty() && pass.length() >=8 && Patterns.EMAIL_ADDRESS.matcher(email).matches() ){
+                        Bundle bundle = new Bundle();
+                        bundle.putString("input_email", email);
+                        bundle.putString("input_password", pass);
+
+                        Fragment newFrag = new CompleteAcc();
+                        newFrag.setArguments(bundle);
+
+                        // Assuming this is inside a Fragment
+                        getParentFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, newFrag)
+                                .addToBackStack(null)
+                                .commit();
+
+                    }else{
+                        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                            input_email.setError("Valid email required");
+                            input_email.requestFocus();
+                            return;
+                        }
+
+                        if(!PassValid){
+                            input_conf.setError("Confirm password do not match with password");
+                            input_conf.requestFocus();
+                        }
+
+                        if (pass.isEmpty() || pass.length() < 8) {
+                            input_password.setError("Password must be at least 8 characters");
+                            input_password.requestFocus();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle potential errors
+                Toast.makeText(getContext(), "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

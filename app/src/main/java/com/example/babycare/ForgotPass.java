@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.babycare.R;
+
 public class ForgotPass extends Fragment {
 
     @Nullable
