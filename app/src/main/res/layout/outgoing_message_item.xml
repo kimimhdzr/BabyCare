@@ -1,0 +1,49 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_gravity="end"> <!-- Aligns to the right (outgoing) -->
+
+    <!-- MessageModel bubble for outgoing messageModel -->
+    <LinearLayout
+        android:layout_marginStart="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_outgoing_message"
+        android:padding="12dp"
+        android:orientation="vertical"
+        android:layout_gravity="end">
+
+        <!-- MessageModel Text -->
+        <TextView
+            android:id="@+id/text_outgoing_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:text="Bro, let's get freaky"/>
+
+        <!-- MessageModel Attachment (optional) -->
+        <ImageView
+            android:id="@+id/img_outgoing_attachment"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/> <!-- Initially hidden, shown only if there is an attachment -->
+
+        <!-- Timestamp -->
+        <TextView
+            android:id="@+id/text_outgoing_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/subtitleTextColor"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:gravity="end"
+            android:background="@android:color/transparent"
+            android:text="12:45 PM"/>
+    </LinearLayout>
+</LinearLayout>

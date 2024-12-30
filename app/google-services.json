@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "874285489039",
+    "firebase_url": "https://babycareconnect-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "babycareconnect",
+    "storage_bucket": "babycareconnect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874285489039:android:a34f86bd194478d71bc9fa",
+        "android_client_info": {
+          "package_name": "com.example.babycare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZK3IaG4rLZYI4lUUA-lsdtseWD_L518g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874285489039:android:389321148af237261bc9fa",
+        "android_client_info": {
+          "package_name": "com.example.babycareconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZK3IaG4rLZYI4lUUA-lsdtseWD_L518g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

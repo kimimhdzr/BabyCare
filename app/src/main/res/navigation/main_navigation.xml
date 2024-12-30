@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/Home">
+
+    <!--    Main  Start  -->
+    <!--    Home  Start  -->
+
+    <fragment
+        android:id="@+id/Home"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Home"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Community"
+            app:destination="@id/Community" />
+        <action
+            android:id="@+id/nav_to_Profile"
+            app:destination="@id/Profile" />
+
+        <!--    Home Contents    -->
+        <action
+            android:id="@+id/nav_to_BabyHome"
+            app:destination="@id/BabyHome" />
+        <action
+            android:id="@+id/nav_to_Calendar"
+            app:destination="@id/Calendar" />
+
+    </fragment>
+
+    <!--    Home Contents Start  -->
+
+    <fragment
+        android:id="@+id/Calendar"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.Others.Calendar"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Home"
+            app:destination="@id/Home" />
+
+        <!--    Home Contents    -->
+        <action
+            android:id="@+id/nav_to_BabyHome"
+            app:destination="@id/BabyHome" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/BabyHome"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.BabyHome"
+        android:label="Baby Home"
+        tools:layout="@layout/fragment_baby_home">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Home"
+            app:destination="@id/Home" />
+
+        <!--    Home Contents  -->
+        <action
+            android:id="@+id/nav_to_Calendar"
+            app:destination="@id/Calendar" />
+
+        <action
+            android:id="@+id/nav_to_BabyProfile"
+            app:destination="@id/BabyProfile" />
+        <action
+            android:id="@+id/nav_to_BabyWall"
+            app:destination="@id/BabyWall" />
+        <action
+            android:id="@+id/nav_to_RoutineTracker"
+            app:destination="@id/RoutineTracker" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/BabyProfile"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.Fragments.BabyProfile"
+        android:label="Baby Profile"
+        tools:layout="@layout/fragment_baby_profile">
+
+        <!--    Home Contents    -->
+        <action
+            android:id="@+id/nav_to_BabyHome"
+            app:destination="@id/BabyHome" />
+        <action
+            android:id="@+id/nav_to_EditBabyProfile"
+            app:destination="@id/EditBabyProfile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/RoutineTracker"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.Fragments.RoutineTracker"
+        android:label="Routine Tracker"
+        tools:layout="@layout/fragment_routine_tracker">
+
+        <!--    Home Contents    -->
+        <action
+            android:id="@+id/nav_to_BabyHome"
+            app:destination="@id/BabyHome" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/BabyWall"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.Fragments.BabyWall"
+        android:label="Baby Wall"
+        tools:layout="@layout/fragment_baby_wall">
+
+        <!--    Home Contents    -->
+        <action
+            android:id="@+id/nav_to_BabyHome"
+            app:destination="@id/BabyHome" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditBabyProfile"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.Fragments.EditBabyProfile"
+        android:label="Edit Baby Profile"
+        tools:layout="@layout/fragment_edit_baby_profile">
+
+        <!--    Home Contents    -->
+        <action
+            android:id="@+id/nav_to_BabyProfile"
+            app:destination="@id/BabyProfile" />
+    </fragment>
+
+    <!--    Home Contents End  -->
+
+    <!--    Home  End  -->
+
+    <!--    Community  Start  -->
+    <fragment
+        android:id="@+id/Community"
+        android:name="com.example.babycare.MainActivity.Fragments.Community.Community"
+        android:label="Community"
+        tools:layout="@layout/fragment_community">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Home"
+            app:destination="@id/Home" />
+        <action
+            android:id="@+id/nav_to_Profile"
+            app:destination="@id/Profile" />
+
+    </fragment>
+
+
+    <!--    Community  End  -->
+
+
+    <!--    Profile  Start  -->
+    <fragment
+        android:id="@+id/Profile"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.MainProfile"
+        android:label="Profile"
+        tools:layout="@layout/fragment_main_profile">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Home"
+            app:destination="@id/Home" />
+        <action
+            android:id="@+id/nav_to_Community"
+            app:destination="@id/Community" />
+
+        <!--    Profile Content    -->
+        <action
+            android:id="@+id/nav_to_ManageChildren"
+            app:destination="@id/ManageChildren" />
+
+    </fragment>
+
+    <!--    Profile  Content Start  -->
+
+    <fragment
+        android:id="@+id/ManageChildren"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.ManageChildren.ManageChildren"
+        android:label="ManageChildren"
+        tools:layout="@layout/fragment_manage_children">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Profile"
+            app:destination="@id/Profile" />
+
+        <!--    Profile Content    -->
+        <action
+            android:id="@+id/nav_to_AddChildren"
+            app:destination="@id/AddChildren" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/AddChildren"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.ManageChildren.Fragment.AddChildren"
+        android:label="AddChildren"
+        tools:layout="@layout/fragment_add_children">
+
+        <!--    Profile Content    -->
+        <action
+            android:id="@+id/nav_to_ManageChildren"
+            app:destination="@id/ManageChildren" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/Setting"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.Setting.Settings"
+        android:label="Setting"
+        tools:layout="@layout/fragment_settings">
+
+        <!--    Main    -->
+        <action
+            android:id="@+id/nav_to_Profile"
+            app:destination="@id/Profile" />
+
+        <!--    Setting Content    -->
+        <action
+            android:id="@+id/nav_to_AppInfo"
+            app:destination="@id/AppInfo" />
+        <action
+            android:id="@+id/nav_to_ChangePass"
+            app:destination="@id/ChangePass" />
+        <action
+            android:id="@+id/nav_to_EditProfile"
+            app:destination="@id/EditProfile" />
+        <action
+            android:id="@+id/nav_to_Support"
+            app:destination="@id/Support" />
+
+    </fragment>
+
+    <!--    Setting  Content Start  -->
+
+    <fragment
+        android:id="@+id/AppInfo"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.Setting.Fragment.AppInformation"
+        android:label="AppInfo"
+        tools:layout="@layout/fragment_app_information">
+
+        <!--    Setting Content    -->
+        <action
+            android:id="@+id/nav_to_Setting"
+            app:destination="@id/Setting" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ChangePass"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.Setting.Fragment.ChangePassword"
+        android:label="ChangePass"
+        tools:layout="@layout/fragment_change_password">
+
+        <!--    Setting Content    -->
+        <action
+            android:id="@+id/nav_to_Setting"
+            app:destination="@id/Setting" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/EditProfile"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.Setting.Fragment.EditProfile"
+        android:label="EditProfile"
+        tools:layout="@layout/fragment_edit_profile">
+
+        <!--    Setting Content    -->
+        <action
+            android:id="@+id/nav_to_Setting"
+            app:destination="@id/Setting" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/Support"
+        android:name="com.example.babycare.MainActivity.Fragments.Profile.Fragments.Setting.Fragment.Support"
+        android:label="Support"
+        tools:layout="@layout/fragment_support">
+
+        <!--    Setting Content    -->
+        <action
+            android:id="@+id/nav_to_Setting"
+            app:destination="@id/Setting" />
+
+    </fragment>
+
+    <!--    Setting  Content End  -->
+
+    <!--    Profile  Content End  -->
+
+    <!--    Profile  End  -->
+
+    <!--    Main  End  -->
+
+
+</navigation>

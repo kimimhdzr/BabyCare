@@ -1,0 +1,51 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BabyCare" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">#FDD3DB</item>
+        <item name="colorPrimaryVariant">#FF7B94</item>
+        <item name="colorOnPrimary">#000000</item>
+
+        <item name="colorSecondary">#C2D6F6</item>
+        <item name="colorSecondaryVariant">#007AFF</item>
+        <item name="colorOnSecondary">#000000</item>
+
+
+        <item name="colorTertiary">#FC0505</item>
+        <item name="colorOnTertiary">#FFFFFF</item>
+
+
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+
+
+        <item name="android:textColor">#000000</item>
+        <item name="subtitleTextColor">#B3B6B9</item>
+
+
+        <item name="android:background">#F8F9FA</item>
+        <item name="backgroundColor">#F8F9FA</item>
+        <item name="colorOnBackground">#000000</item>
+
+
+        <item name="colorError">#B00020</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>-->
+
+
+        <item name="bottomNavigationStyle">@style/BottomNavStyleLight</item>
+
+    </style>
+
+    <style name="Theme.BabyCare" parent="Base.Theme.BabyCare" />
+
+    <style name="BottomNavStyleLight">
+        <item name="itemIconTint">@color/bottom_nav_item_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_item_selector</item>
+    </style>
+
+</resources>

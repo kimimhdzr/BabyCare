@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/Login">
+
+    <fragment
+        android:id="@+id/Login"
+        android:name="com.example.babycare.AuthActivity.Fragments.Login"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/nav_to_SignUp1"
+            app:destination="@id/SignUp1" />
+        <action
+            android:id="@+id/nav_to_ForgotPassword"
+            app:destination="@id/ForgotPassword" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ForgotPassword"
+        android:name="com.example.babycare.AuthActivity.Fragments.ForgotPassword"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/nav_to_Login"
+            app:destination="@id/Login" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignUp1"
+        android:name="com.example.babycare.AuthActivity.Fragments.SignUp1"
+        android:label="SignUp1"
+        tools:layout="@layout/fragment_sign_up1">
+        <action
+            android:id="@+id/nav_to_Login"
+            app:destination="@id/Login" />
+        <action
+            android:id="@+id/nav_to_SignUp2"
+            app:destination="@id/SignUp2" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/SignUp2"
+        android:name="com.example.babycare.AuthActivity.Fragments.SignUp2"
+        android:label="SignUp2"
+        tools:layout="@layout/fragment_sign_up2">
+        <action
+            android:id="@+id/nav_to_SignUp1"
+            app:destination="@id/SignUp1" />
+    </fragment>
+
+</navigation>

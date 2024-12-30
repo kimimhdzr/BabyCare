@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_gravity="start"> <!-- Aligns to the left (incoming) -->
+
+    <!-- MessageModel bubble for incoming messageModel -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_incoming_message"
+        android:layout_marginEnd="55dp"
+        android:padding="12dp"
+        android:orientation="vertical"
+        android:layout_gravity="start">
+
+        <!-- MessageModel Text -->
+        <TextView
+            android:background="@android:color/transparent"
+            android:id="@+id/text_incoming_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="16sp"
+            android:text="Aight bet"/>
+
+        <!-- MessageModel Attachment (optional) -->
+        <ImageView
+            android:id="@+id/img_incoming_attachment"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/> <!-- Initially hidden, shown only if there is an attachment -->
+
+        <!-- Timestamp -->
+        <TextView
+            android:background="@android:color/transparent"
+            android:id="@+id/text_incoming_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/subtitleTextColor"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"
+            android:gravity="start"
+            android:text="12:45 PM"/>
+    </LinearLayout>
+</LinearLayout>
