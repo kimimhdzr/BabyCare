@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:orientation="horizontal">
+
+        <!-- First grid item (ConstraintLayout) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintWidth_percent="0.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="160dp"
+                android:layout_height="152dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/rounded_border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Second grid item (ConstraintLayout) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:padding="8dp"
+            app:layout_constraintWidth_percent="0.5"> <!-- Optional: width percentage if needed -->
+            <!-- Content for the second grid item goes here -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Third grid item (ConstraintLayout) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:padding="8dp"
+            app:layout_constraintWidth_percent="0.5"> <!-- Optional: width percentage if needed -->
+            <!-- Content for the third grid item goes here -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Fourth grid item (ConstraintLayout) -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:padding="8dp"
+            app:layout_constraintWidth_percent="0.5"> <!-- Optional: width percentage if needed -->
+            <!-- Content for the fourth grid item goes here -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:text="Time Log History"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="188dp"
+        android:orientation="horizontal">
+        <!-- Content for the bottom section goes here -->
+    </LinearLayout>
+
+</LinearLayout>
+
+

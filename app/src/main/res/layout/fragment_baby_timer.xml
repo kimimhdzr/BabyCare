@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/bigview2"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border"
+        app:layout_constraintEnd_toEndOf="@+id/bigview"
+        app:layout_constraintStart_toStartOf="@+id/bigview"
+        app:layout_constraintTop_toBottomOf="@+id/bigview" />
+
+    <ImageButton
+        android:id="@+id/imageButton6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/pink_box"
+        android:backgroundTint="#FDD3DB"
+        app:layout_constraintBottom_toBottomOf="@+id/bigview2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+        app:layout_constraintStart_toStartOf="@+id/bigview2"
+        app:layout_constraintTop_toBottomOf="@+id/time_log_history"
+        app:srcCompat="@drawable/food2" />
+
+    <ImageButton
+        android:id="@+id/imageButton5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/pink_box"
+        android:backgroundTint="#FDD3DB"
+        app:layout_constraintBottom_toBottomOf="@+id/bigview2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+        app:layout_constraintStart_toEndOf="@+id/imageButton6"
+        app:layout_constraintTop_toBottomOf="@+id/time_log_history"
+        app:srcCompat="@drawable/bathtub2" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/pink_box"
+        android:backgroundTint="#FDD3DB"
+        app:layout_constraintBottom_toBottomOf="@+id/bigview2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintStart_toEndOf="@+id/imageButton5"
+        app:layout_constraintTop_toBottomOf="@+id/time_log_history"
+        app:srcCompat="@drawable/change2" />
+
+    <TextView
+        android:id="@+id/time_log_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Time Log History"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/bigview2"
+        app:layout_constraintStart_toStartOf="@+id/bigview2"
+        app:layout_constraintTop_toTopOf="@+id/bigview2" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="#D9D9D9"
+        android:elevation="-1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Baby Hisham"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Age"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/profile_pic_holder" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:contentDescription="back"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/baseline_arrow_back_ios_24" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="notification bell"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/baseline_notifications_none_24" />
+
+    <View
+        android:id="@+id/bigview"
+        android:layout_width="0dp"
+        android:layout_height="470dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <Button
+        android:id="@+id/reset_button_food"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FDD3DB"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Reset"
+        android:textColor="#000000"
+        android:textSize="17sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/left_box2"
+        app:layout_constraintEnd_toEndOf="@+id/left_box"
+        app:layout_constraintStart_toStartOf="@+id/left_box"
+        app:layout_constraintTop_toBottomOf="@+id/left_box" />
+
+    <View
+        android:id="@+id/left_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/blue_box"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button_food"
+        app:layout_constraintEnd_toStartOf="@+id/right_box"
+        app:layout_constraintStart_toStartOf="@+id/bigview"
+        app:layout_constraintTop_toTopOf="@+id/bigview" />
+
+    <View
+        android:id="@+id/right_box2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/blue_box"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button_sleep"
+        app:layout_constraintEnd_toEndOf="@+id/bigview"
+        app:layout_constraintStart_toEndOf="@+id/left_box2"
+        app:layout_constraintTop_toBottomOf="@+id/reset_button_bath" />
+
+    <TextView
+        android:id="@+id/timer_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/inter"
+        android:text="1s ago"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/right_box2"
+        app:layout_constraintEnd_toEndOf="@+id/right_box2"
+        app:layout_constraintStart_toStartOf="@+id/right_box2"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Sleepy Time"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/timer_sleep"
+        app:layout_constraintEnd_toEndOf="@+id/right_box2"
+        app:layout_constraintStart_toStartOf="@+id/right_box2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <View
+        android:id="@+id/right_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/blue_box"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button_bath"
+        app:layout_constraintEnd_toEndOf="@+id/bigview"
+        app:layout_constraintStart_toEndOf="@+id/left_box"
+        app:layout_constraintTop_toTopOf="@+id/bigview" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Baby Bath"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/timer_bath"
+        app:layout_constraintEnd_toEndOf="@+id/right_box"
+        app:layout_constraintStart_toStartOf="@+id/right_box"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/timer_bath"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/inter"
+        android:text="1s ago"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/right_box"
+        app:layout_constraintEnd_toEndOf="@+id/right_box"
+        app:layout_constraintStart_toStartOf="@+id/right_box"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <Button
+        android:id="@+id/reset_button_change"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FDD3DB"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Reset"
+        android:textColor="#000000"
+        android:textSize="17sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bigview"
+        app:layout_constraintEnd_toEndOf="@+id/left_box2"
+        app:layout_constraintStart_toStartOf="@+id/left_box2"
+        app:layout_constraintTop_toBottomOf="@+id/left_box2" />
+
+    <TextView
+        android:id="@+id/timer_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/inter"
+        android:text="1s ago"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/left_box"
+        app:layout_constraintEnd_toEndOf="@+id/left_box"
+        app:layout_constraintStart_toStartOf="@+id/left_box"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <View
+        android:id="@+id/left_box2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/blue_box"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button_change"
+        app:layout_constraintEnd_toStartOf="@+id/right_box2"
+        app:layout_constraintStart_toStartOf="@+id/bigview"
+        app:layout_constraintTop_toBottomOf="@+id/reset_button_food" />
+
+    <TextView
+        android:id="@+id/timer_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/inter"
+        android:text="1s ago"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/left_box2"
+        app:layout_constraintEnd_toEndOf="@+id/left_box2"
+        app:layout_constraintStart_toStartOf="@+id/left_box2" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Diaper Change"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/timer_change"
+        app:layout_constraintEnd_toEndOf="@+id/left_box2"
+        app:layout_constraintStart_toStartOf="@+id/left_box2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="@+id/right_box"
+        app:layout_constraintStart_toStartOf="@+id/right_box"
+        app:layout_constraintTop_toTopOf="@+id/right_box"
+        app:srcCompat="@drawable/bathtub" />
+
+    <Button
+        android:id="@+id/reset_button_bath"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FDD3DB"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Reset"
+        android:textColor="#000000"
+        android:textSize="17sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/right_box2"
+        app:layout_constraintEnd_toEndOf="@+id/right_box"
+        app:layout_constraintStart_toStartOf="@+id/right_box"
+        app:layout_constraintTop_toBottomOf="@+id/right_box" />
+
+    <Button
+        android:id="@+id/reset_button_sleep"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#FDD3DB"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Reset"
+        android:textColor="#000000"
+        android:textSize="17sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bigview"
+        app:layout_constraintEnd_toEndOf="@+id/right_box2"
+        app:layout_constraintStart_toStartOf="@+id/right_box2"
+        app:layout_constraintTop_toBottomOf="@+id/right_box2" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Nomnoms"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/timer_food"
+        app:layout_constraintEnd_toEndOf="@+id/left_box"
+        app:layout_constraintStart_toStartOf="@+id/left_box"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/right_box2"
+        app:layout_constraintStart_toStartOf="@+id/right_box2"
+        app:layout_constraintTop_toTopOf="@+id/right_box2"
+        app:srcCompat="@drawable/bed" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="@+id/left_box"
+        app:layout_constraintStart_toStartOf="@+id/left_box"
+        app:layout_constraintTop_toTopOf="@+id/left_box"
+        app:srcCompat="@drawable/food" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="@+id/left_box2"
+        app:layout_constraintStart_toStartOf="@+id/left_box2"
+        app:layout_constraintTop_toTopOf="@+id/left_box2"
+        app:srcCompat="@drawable/change" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/pink_box"
+        android:backgroundTint="#FDD3DB"
+        app:layout_constraintBottom_toBottomOf="@+id/bigview2"
+        app:layout_constraintEnd_toEndOf="@+id/bigview2"
+        app:layout_constraintStart_toEndOf="@+id/imageButton4"
+        app:layout_constraintTop_toBottomOf="@+id/time_log_history"
+        app:srcCompat="@drawable/bed2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
