@@ -2,7 +2,7 @@ package com.example.babycare.MainActivity.Fragments.Community.Services;
 
 import android.content.Context;
 
-import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
+//import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 public class ChatManager {
     private static ChatManager instance;
     private FirebaseFirestore db;
-    MyDatabaseHelper dbHelper;
+    //MyDatabaseHelper dbHelper;
     private String chatID;
     private String chatName;
 
@@ -45,7 +45,7 @@ public class ChatManager {
             // Log an error or handle the case when chatId is null or empty
             return;
         }
-        dbHelper = new MyDatabaseHelper(context, "CurrentUser.db");
+        //dbHelper = new MyDatabaseHelper(context, "CurrentUser.db");
 
 
         // Create a new message document
@@ -67,7 +67,7 @@ public class ChatManager {
         message.put("message_type", messageType);
         message.put("reactions", reactions); // Add reactions if needed
         message.put("read_by", readBy);
-        message.put("sender", dbHelper.getRole()); //user or staff
+        //message.put("sender", dbHelper.getRole()); //user or staff
         message.put("timestamp", FieldValue.serverTimestamp());
 
         // Save the message to the messageModels collection
@@ -78,7 +78,7 @@ public class ChatManager {
                 .set(message)
                 .addOnSuccessListener(aVoid -> {
                     // MessageModel saved successfully
-                    updateChat(chatId, messageId, content, dbHelper.getRole());
+                    //updateChat(chatId, messageId, content, dbHelper.getRole());
                 }).addOnFailureListener(e -> {
                     // Handle error
                 });

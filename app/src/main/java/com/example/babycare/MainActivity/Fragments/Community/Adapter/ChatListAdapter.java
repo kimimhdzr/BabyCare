@@ -12,7 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babycare.DataBinding.Model.ChatModel;
-import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
+//import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.example.babycare.MainActivity.Fragments.Community.Services.ChatManager;
 import com.example.babycare.R;
 import com.google.android.material.card.MaterialCardView;
@@ -23,7 +23,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
 
     private Context context;
     private List<ChatModel> chatList;
-    MyDatabaseHelper dbHelper;
+    //MyDatabaseHelper dbHelper;
     ChatManager chatManager;
 
     public ChatListAdapter(Context context,
@@ -44,7 +44,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         ChatModel chat = chatList.get(position);
 
-        userProfile = new CurrentUserSharedPreference(context);
+        /*userProfile = new CurrentUserSharedPreference(context);
         String role = userProfile.getRole();
 
         String name = "";
@@ -69,7 +69,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.nav_to_Pe);
             }
-        });
+        });*/
 
     }
 

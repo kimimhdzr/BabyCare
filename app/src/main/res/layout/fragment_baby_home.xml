@@ -1,14 +1,367 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="UTF-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity.Fragments.Home.Fragments.BabyHome.BabyHome">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Top section with profile and notification -->
+    <LinearLayout
+        android:gravity="center_horizontal"
+
+        android:paddingStart="10dp"
+        android:paddingTop="15dp"
+        android:background="@drawable/white_rect_gray_line"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="70dp"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <!-- Profile Image -->
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/homelander"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#C2D6F6"
+            />
+
+
+
+        <!-- User Info -->
+        <LinearLayout
+
+            android:paddingStart="10dp"
+            android:layout_marginBottom="100dp"
+            android:layout_width="295dp"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:id="@+id/baby_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Baby Kimi"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/interbold"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/baby_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semibold"
+                android:textSize="12sp"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <RelativeLayout
+
+            android:layout_marginTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/notification_bell"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/notification_bell" />
+
+            <ImageView
+                android:id="@+id/red_circle"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_alignTop="@id/notification_bell"
+                android:layout_alignRight="@id/notification_bell"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/red_circle" />
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="15sp"
+                android:textColor="#343A40"
+                android:text="Tuesday, September 11"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/interbold"
+                android:textSize="22sp"
+                android:text="Today"/>
+
+
+
+            <RelativeLayout
+
+                android:layout_width="370dp"
+                android:layout_height="310dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_rect_fully_rounded"
+                android:elevation="8dp"
+                android:clipToOutline="true">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/babypic"
+                    android:src="@drawable/homelander"
+                    android:scaleType="fitXY"
+                    />
+
+                <TextView
+                    android:id="@+id/babymonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/babypic"
+                    android:text="12"
+                    android:background="@android:color/transparent"
+                    android:textSize="32sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/interbold"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginStart="30dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/babypic"
+                    android:text="Months"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/inter_medium"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="30dp"
+
+                    />
+
+                <TextView
+                    android:id="@+id/babyweek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/babypic"
+                    android:layout_alignEnd="@id/babypic"
+                    android:text="3"
+                    android:background="@android:color/transparent"
+                    android:textSize="32sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/interbold"
+                    android:layout_marginBottom="35dp"
+                    android:layout_marginEnd="30dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/babypic"
+                    android:layout_alignEnd="@id/babypic"
+                    android:text="Months"
+                    android:background="@android:color/transparent"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/inter_medium"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="30dp"
+
+                    />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="370dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/white_rect_fully_rounded"
+                android:elevation="8dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:background="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:paddingLeft="15dp"
+                    android:fontFamily="@font/inter_semibold"
+                    android:textSize="22sp"
+                    android:text="Actions"/>
+                
+                
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    
+                    <ImageView
+                        android:background="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/profile"/>
+                    
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Baby Profile"
+                            android:fontFamily="@font/interbold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textColor="#B3B6B9"
+                            android:text="See your baby profile and details"
+                            android:fontFamily="@font/inter_medium"
+                            />
+                        
+                        
+                    </LinearLayout>
+                    
+                    
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:layout_marginStart="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:background="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/profile"/>
+
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Routine"
+                            android:fontFamily="@font/interbold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textColor="#B3B6B9"
+                            android:text="Track your baby progress"
+                            android:fontFamily="@font/inter_medium"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:background="@color/white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/profile"/>
+
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:text="Baby Wall"
+                            android:fontFamily="@font/interbold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textColor="#B3B6B9"
+                            android:text="Record your baby moments"
+                            android:fontFamily="@font/inter_medium"
+                            />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+                
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+</LinearLayout>

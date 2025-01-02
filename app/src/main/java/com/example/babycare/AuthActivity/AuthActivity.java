@@ -17,19 +17,9 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);
+        setContentView(R.layout.fragment_baby_profile);
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
 
-        // Check if the user is already logged in
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            Log.d(TAG, "User already logged in, navigating to MainActivity");
-            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish(); // Close AuthActivity to prevent the user from going back here
-        }
 
 
     }

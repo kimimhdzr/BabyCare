@@ -14,6 +14,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -49,4 +50,5 @@ dependencies {
     implementation("androidx.credentials:credentials:1.5.0-beta01")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
     implementation("com.google.android.gms:play-services-auth:21.3.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

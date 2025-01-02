@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+
+/*
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
     private Context context;
@@ -92,7 +94,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_2);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_3);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_4);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_5);
+
 
         // Recreate tables
         onCreate(db);
@@ -295,7 +297,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         values2.put("lastMessageID", "");
         values2.put("participantID", participantID);
         values2.put("createdAt", createdAt);
-
+        /*
         long result2 = db.insert(TABLE_NAME_3, null, values2);
         if (result2 == -1) {
             Log.e(TAG, "Failed to insert data into Chats table.");
@@ -306,3 +308,4 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
 }
+*/

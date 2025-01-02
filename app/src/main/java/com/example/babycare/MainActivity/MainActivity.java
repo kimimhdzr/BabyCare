@@ -10,7 +10,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
+//import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.example.babycare.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     FirebaseAuth mAuth;
     FirebaseFirestore db;
-    MyDatabaseHelper dbHelper;
+    //MyDatabaseHelper dbHelper;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -52,15 +52,15 @@ public class MainActivity extends AppCompatActivity {
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        dbHelper = new MyDatabaseHelper(MainActivity.this, "CurrentUser.db");
+        //dbHelper = new MyDatabaseHelper(MainActivity.this, "CurrentUser.db");
         // Check data locally or fetch from Firestore
-        fetchLocalOrRemoteData(dbHelper);
+        //fetchLocalOrRemoteData(dbHelper);
     }
 
-
+/*
     private void fetchLocalOrRemoteData(MyDatabaseHelper dbHelper) {
         // Call readAllDataCurrentUser from DatabaseHelper
-        Cursor cursor = dbHelper.readAllDataCurrentUser();
+        //Cursor cursor = dbHelper.readAllDataCurrentUser();
 
         if (cursor != null && cursor.moveToFirst()) {
             // Table is not empty, read data from SQLite
@@ -136,5 +136,5 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
         return dateFormat.format(timestamp);
 
-    }
+    }*/
 }
