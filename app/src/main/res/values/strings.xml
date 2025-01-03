@@ -6,6 +6,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="underlined_text"><u>Create new account</u></string>
+    <string name="google_client_id">175753056738–2gfb1ucgrp7omp4aa2kikfjsg8fb9gaj.apps.googleusercontent.com</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -47,7 +48,7 @@
     <string name="facebook_app_id">1234</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">56789</string>
-    <string name="web_client_id">175753056738–2gfb1ucgrp7omp4aa2kikfjsg8fb9gaj.apps.googleusercontent.com</string>
+    <string name="web_client_id">874285489039-47gs6eh1scpgc9pog9pbbh441k4oadjc.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

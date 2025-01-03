@@ -1,30 +1,59 @@
 package com.example.babycare.AuthActivity.Fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.babycare.MainActivity.Fragments.Home.Home;
 import com.example.babycare.MainActivity.MainActivity;
 import com.example.babycare.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.TotpMultiFactorAssertion;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-public class Login extends Fragment {
+public class Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
     private FirebaseAuth mAuth;
+    private static final int RC_SIGN_IN = 9001;
     private EditText email, password;
     private Button loginButton, signupButton;
     private TextView forgotpassTxtView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
 
     @Override
@@ -40,13 +69,26 @@ public class Login extends Fragment {
         signupButton = view.findViewById(R.id.create_account);
         forgotpassTxtView = view.findViewById(R.id.forgot_password);
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.web_client_id))
+                .requestEmail()
+                .build();
 
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .enableAutoManage(getActivity(), this::onConnectionFailed)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
         NavController navController = NavHostFragment.findNavController(this);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.nav_to_SignUp1);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("gso", gso);
+                mGoogleApiClient.stopAutoManage(getActivity());
+                mGoogleApiClient.disconnect();
+
+                navController.navigate(R.id.nav_to_SignUp1,bundle);
             }
         });
         forgotpassTxtView.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +120,13 @@ public class Login extends Fragment {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Login successful!", Toast.LENGTH_SHORT).show();
+
+                            String UID = mAuth.getCurrentUser().getUid();
+
+                            Log.d("TEST","WHAT" + UID);
+
                             Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.putExtra("session_id",UID);
                             startActivity(intent);
                             getActivity().finish();
                             // Navigate to another activity (e.g., MainActivity)
@@ -89,6 +137,94 @@ public class Login extends Fragment {
         });
 
 
+        ImageButton googleSignIn = view.findViewById(R.id.google_signin);
+
+
+        googleSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signInwithGoogle(mGoogleApiClient);
+            }
+        });
+
+
         return view;
+    }
+
+    protected void signInwithGoogle(GoogleApiClient mGoogleApiClient){
+
+
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        mAuth = FirebaseAuth.getInstance();
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+
+                            Log.d("TEST","FR" + task.getResult().getAdditionalUserInfo().isNewUser());
+
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()){
+
+                                String UID = mAuth.getCurrentUser().getUid();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("UID",UID);
+
+
+                                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_auth);
+                                navController.navigate(R.id.nav_to_SignUp2,bundle);
+                            }
+                            else{
+                                Toast.makeText(getActivity(), "Authentication pass.",
+                                        Toast.LENGTH_SHORT).show();
+
+
+                                String UID = mAuth.getCurrentUser().getUid();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                intent.putExtra("session_id",UID);
+                                startActivity(intent);
+                                getActivity().finish();
+
+                            }
+
+
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.d("TTEST","FR"+result.getStatus());
+            if (result.isSuccess()) {
+                GoogleSignInAccount acct = result.getSignInAccount();
+                ;
+                firebaseAuthWithGoogle(acct);
+            } else {
+                Toast.makeText(getActivity(),"There was a trouble signing in-Please try again",Toast.LENGTH_SHORT).show();;
+            }
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

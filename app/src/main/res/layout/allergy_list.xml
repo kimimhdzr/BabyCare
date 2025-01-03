@@ -13,6 +13,7 @@
         android:background="#007BFF"/>
 
     <TextView
+        android:id="@+id/allergy_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

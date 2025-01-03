@@ -149,6 +149,7 @@
         app:layout_constraintTop_toBottomOf="@id/or_continue_with">
 
         <ImageButton
+            android:id="@+id/google_signin"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginRight="10dp"

@@ -140,7 +140,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/babymonth"
+                    android:id="@+id/month_display"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/babypic"
@@ -222,6 +222,7 @@
                 
                 
                 <LinearLayout
+                    android:id="@+id/toBabyProfile"
                     android:background="@color/white"
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
@@ -265,6 +266,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/toRoutineTracker"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:layout_marginStart="20dp"
@@ -309,6 +311,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/toBabyWall"
                     android:layout_marginTop="10dp"
                     android:background="@color/white"
                     android:layout_marginLeft="20dp"

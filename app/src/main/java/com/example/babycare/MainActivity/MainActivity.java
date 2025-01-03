@@ -9,8 +9,10 @@ import androidx.navigation.ui.NavigationUI;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 //import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
+import com.example.babycare.Objects.User;
 import com.example.babycare.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.bundle.BundledQueryOrBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +32,10 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
+
+    private String UID;
+    User session_user;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     //MyDatabaseHelper dbHelper;
@@ -41,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        Bundle bundle = getIntent().getExtras();
+        UID = bundle.getString("session_id");
+        fetchSessionUser();
         // Initialize profileManager (example, adjust as needed)
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
@@ -52,9 +63,49 @@ public class MainActivity extends AppCompatActivity {
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+
+
+
+
+
+
         //dbHelper = new MyDatabaseHelper(MainActivity.this, "CurrentUser.db");
         // Check data locally or fetch from Firestore
         //fetchLocalOrRemoteData(dbHelper);
+    }
+
+
+    public void fetchSessionUser(){
+
+        db.collection("users")
+                .document(UID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            // If the document retrieval is successful, get the document
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) {
+                                // Retrieve data from the document
+                                String name = document.getString("username");
+                                String status = document.getString("type");
+
+                                if (session_user == null) {
+                                    session_user = new User();
+                                }
+
+                                session_user.setUsername(name);
+                                session_user.setStatus(status);
+
+                            } else {
+                                Log.d("Firestore", "No user found with UID: " + UID);
+                            }
+                        } else {
+                            Log.d("Firestore", "Failed to get document", task.getException());
+                        }
+                    }
+                });
     }
 
 /*
