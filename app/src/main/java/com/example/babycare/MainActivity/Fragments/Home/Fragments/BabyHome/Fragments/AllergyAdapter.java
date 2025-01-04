@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.babycare.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.MyViewHolder> {
 
@@ -36,7 +35,7 @@ public class AllergyAdapter extends RecyclerView.Adapter<AllergyAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate the item layout
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.allergy_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_allergy, parent, false);
         return new MyViewHolder(view);
     }
 

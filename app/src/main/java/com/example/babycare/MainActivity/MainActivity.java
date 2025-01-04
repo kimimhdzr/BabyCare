@@ -46,7 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements AdapterInt {
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private TipsCircle tipsCircle;
@@ -80,13 +80,6 @@ public class MainActivity extends AppCompatActivity implements AdapterInt {
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-
-
-
-
-        //dbHelper = new MyDatabaseHelper(MainActivity.this, "CurrentUser.db");
-        // Check data locally or fetch from Firestore
-        //fetchLocalOrRemoteData(dbHelper);
     }
 
 
@@ -129,40 +122,8 @@ public class MainActivity extends AppCompatActivity implements AdapterInt {
         usernameTextView.setText(session_user.getUsername());
 
 
-        ViewPager2 tips_cards = findViewById(R.id.tipsViewPager);
-        RecyclerView circles = findViewById(R.id.circle_recycler);
-
-        Tip tip1 = new Tip("START YOUR DAY","start your day with a good night sleep and a good morning routine and a healthy breakfast");
-        Tip tip2 = new Tip("Healthy Nutrient","A healthy nutrient is a very vital aspect in ensuring your child's growth");
-
-        ArrayList<Tip> tips = new ArrayList<>();
-        tips.add(tip1);
-        tips.add(tip2);
-
-        TipsAdapter tipsAdapter = new TipsAdapter(tips, this);
-        tipsCircle = new TipsCircle(tips);
-
-        tips_cards.setAdapter(tipsAdapter);
-        circles.setAdapter(tipsCircle);
-
-        circles.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-
-        tips_cards.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                // Update the second adapter's selected position
-                tipsCircle.updateSelectedPosition(position);
-            }
-        });
-
     }
 
-    @Override
-    public void onItemSelected(int position) {
-        // Update the second adapter's selected position when an item is selected in the first adapter
-        tipsCircle.updateSelectedPosition(position);
-    }
 
 
 /*

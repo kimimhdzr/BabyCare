@@ -170,7 +170,7 @@
 
 
             <LinearLayout
-
+                android:clipToOutline="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -190,6 +190,9 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+
                     android:id="@+id/MyChildrenRecycler"
                     android:layout_width="370dp"
                     android:layout_height="260dp"
@@ -201,8 +204,8 @@
 
             <LinearLayout
                 android:clipToOutline="true"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_width="370dp"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/white_rect_fully_rounded"
@@ -213,11 +216,51 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:paddingStart="10dp"
                     android:gravity="center"
                     android:paddingLeft="5dp"
                     android:text="Actions"
                     android:textSize="22sp"
                     android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/toCalendarPage"
+                    android:layout_width="370dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp">
+
+                    <ImageView
+                        android:id="@+id/calendar_icon"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/calendar_blue_icon"/>
+
+                    <TextView
+                        android:id="@+id/calendarText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Calendar"
+                        android:layout_toRightOf="@id/calendar_icon"/>
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_medium"
+                        android:textSize="15sp"
+                        android:layout_marginStart="10dp"
+                        android:text="Schedule important events for your baby"
+                        android:layout_below="@id/calendarText"
+                        android:layout_toRightOf="@id/calendar_icon"
+                        android:textColor="#B3B6B9"/>
+
+                </RelativeLayout>
+
+
 
 
 

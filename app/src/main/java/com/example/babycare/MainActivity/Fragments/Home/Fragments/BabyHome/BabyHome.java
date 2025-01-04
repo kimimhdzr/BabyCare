@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,36 +28,55 @@ public class BabyHome extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_baby_home, container, false);
 
-        session_baby = new Baby("Daddy Hafiz","Baby Kimmy","-O","2000-05-23");
+
+
+        Bundle bundle = getArguments();
+        session_baby = (Baby) bundle.getSerializable("session_baby");
         calculateMonthsandWeeks();
 
-        TextView babyname = view.findViewById(R.id.baby_name);
-        babyname.setText(session_baby.getName());
+        view.findViewById(R.id.toBabyProfile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle baby_bundle = new Bundle();
+                baby_bundle.putSerializable("Baby",session_baby);
+                Navigation.findNavController(view).navigate(R.id.nav_to_BabyProfile,baby_bundle);
+            }
+        });
 
-        TextView babyage = view.findViewById(R.id.baby_age);
-        if(session_baby.getYears() == 0){
-            babyage.setText(session_baby.getMonth() +" months");
+        view.findViewById(R.id.toRoutineTracker).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle baby_bundle = new Bundle();
+                baby_bundle.putSerializable("Baby",session_baby);
+                Navigation.findNavController(view).navigate(R.id.nav_to_RoutineTracker,baby_bundle);
+            }
+        });
+
+        view.findViewById(R.id.toBabyWall).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle baby_bundle = new Bundle();
+                baby_bundle.putSerializable("Baby",session_baby);
+                Navigation.findNavController(view).navigate(R.id.nav_to_BabyWall,baby_bundle);
+
+            }
+        });
+
+        TextView babyname_display = view.findViewById(R.id.baby_name);
+        babyname_display.setText(session_baby.getName());
+
+        TextView babyage_display = view.findViewById(R.id.baby_age);
+        if (session_baby.getYears()==0){
+            babyage_display.setText(session_baby.getMonth()+" months," + session_baby.getWeek()+" weeks");
         }else{
-            babyage.setText(session_baby.getYears() + " years, " + session_baby.getMonth() + " months");
+            babyage_display.setText(session_baby.getYears()+" years, "+session_baby.getMonth()+" months");
         }
 
+        TextView babyweek_display = view.findViewById(R.id.babyweek);
+        babyweek_display.setText(String.valueOf(session_baby.getWeek()));
 
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("Baby", session_baby);
-
-        view.findViewById(R.id.toBabyProfile).setOnClickListener(v ->
-
-                Navigation.findNavController(v).navigate(R.id.nav_to_BabyProfile,bundle)
-        );
-
-        view.findViewById(R.id.toRoutineTracker).setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.nav_to_RoutineTracker,bundle)
-        );
-
-        view.findViewById(R.id.toBabyWall).setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.nav_to_BabyWall,bundle)
-        );
+        TextView babymonth_display = view.findViewById(R.id.month_display);
+        babymonth_display.setText(String.valueOf(session_baby.getMonth()));
 
 
 
@@ -70,12 +90,23 @@ public class BabyHome extends Fragment {
         LocalDate birthday = LocalDate.parse(session_baby.getBirthday());
         LocalDate today = LocalDate.now();
 
-        Period diff = Period.between(birthday,today);
+        Log.d("TEST","TR"+ birthday);
+        Log.d("TEST","TR"+ today);
 
-        int weeks = diff.getDays()/7;
+        Period diff = Period.between(birthday,today);
+        Log.d("TEST","TR"+ diff);
+
+
+
+        double weeks = diff.getDays() / 7.0;
+        Log.d("TEST","TEST" + weeks);
+
+        Log.d("TEST","TR"+ diff.getMonths());
+        Log.d("TEST","TR"+ diff.getYears());
+        Log.d("TEST","TR"+ weeks);
 
         session_baby.setYears(diff.getYears());
         session_baby.setMonth(diff.getMonths());
-        session_baby.setWeek(diff.getMonths());
+        session_baby.setWeek((int)weeks);
     }
 }

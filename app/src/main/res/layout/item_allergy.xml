@@ -5,7 +5,8 @@
     android:layout_height="55dp"
     android:orientation="horizontal"
     android:clipToOutline="true"
-    android:elevation="8dp">
+    android:elevation="8dp"
+    android:layout_marginBottom="10dp">
 
     <FrameLayout
         android:layout_width="15dp"
