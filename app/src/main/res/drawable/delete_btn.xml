@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape
+            android:shape="rectangle">
+            <size
+                android:width="65dp"
+                android:height="25dp"/>
+            <solid android:color="#FC0505" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+
+    <item
+        android:drawable="@drawable/ic_delete"
+        android:gravity="center" />
+
+</layer-list>

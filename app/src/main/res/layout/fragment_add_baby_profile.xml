@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_baby_profile" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/AppBarCL"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/AppBarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/up_button"
+            android:layout_width="48dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Up button"
+            android:scaleType="center"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/notification_button"
+            android:layout_width="51dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Notification button"
+            android:src="@drawable/ic_notifications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/babyDetailSV"
+        android:layout_width="409dp"
+        android:layout_height="661dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AppBarCL"
+        android:contentDescription="Scroll view baby details"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/AddBabyTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/inter"
+                android:text="Add Baby Profile"
+                android:textColor="@color/black"
+                android:textSize="26dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/babyPictureEdit"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AddBabyTV"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                android:src="@drawable/database"/>
+
+            <ImageButton
+                android:id="@+id/editProfileBtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginEnd="124dp"
+                android:layout_marginBottom="28dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Edit baby profile picture"
+                android:src="@drawable/edit_profile_btn"
+                app:layout_constraintBottom_toTopOf="@+id/babyDetailsView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/babyDetailsView"
+                android:layout_width="389dp"
+                android:layout_height="650dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="44dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/rectangle_add_baby"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/babyPictureEdit" />
+
+            <EditText
+                android:id="@+id/usernameTV"
+                android:layout_width="340dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#007BFF"
+                android:ems="10"
+                android:fontFamily="@font/inter"
+                android:hint="Username"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/babyDetailsView" />
+
+            <EditText
+                android:id="@+id/dobTV"
+                android:layout_width="340dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#007BFF"
+                android:ems="10"
+                android:fontFamily="@font/inter"
+                android:hint="Date of birth (DD/MM/YY)"
+                android:inputType="date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/usernameTV" />
+
+            <EditText
+                android:id="@+id/heightTV"
+                android:layout_width="340dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#007BFF"
+                android:ems="10"
+                android:fontFamily="@font/inter"
+                android:hint="Height(cm)"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.507"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dobTV" />
+
+            <EditText
+                android:id="@+id/weightTV"
+                android:layout_width="340dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#007BFF"
+                android:ems="10"
+                android:fontFamily="@font/inter"
+                android:hint="Weight (kg)"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/heightTV" />
+
+            <EditText
+                android:id="@+id/bloodTypeTV"
+                android:layout_width="340dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="#007BFF"
+                android:ems="10"
+                android:fontFamily="@font/inter"
+                android:hint="Blood Type"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.507"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weightTV" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/alergiesRV"
+                android:layout_width="340dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bloodTypeTV" />
+
+            <Button
+                android:id="@+id/addMoreBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#F8F9FA"
+                android:contentDescription="Add more button"
+                android:fontFamily="@font/inter"
+                android:text="Add more"
+                android:textColor="#767676"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/alergiesRV" />
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="164dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
+                android:text="Save"
+                android:textSize="24dp"
+                android:fontFamily="@font/inter"
+                android:backgroundTint="#007BFF"
+                android:contentDescription="Save button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/babyDetailsView" />
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="164dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="#FC0505"
+                android:contentDescription="Cancel button"
+                android:text="Cancel"
+                android:textSize="24dp"
+                app:layout_constraintEnd_toStartOf="@id/saveBtn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/babyDetailsView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
