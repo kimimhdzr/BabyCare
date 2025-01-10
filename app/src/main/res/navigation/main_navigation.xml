@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/Calendar"
-        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.Others.Calendar"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.Calendar.Calendar"
         android:label="Calendar"
         tools:layout="@layout/fragment_calendar">
 

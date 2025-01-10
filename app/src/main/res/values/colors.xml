@@ -2,6 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="theme_background">#C2D6F6</color> <!-- Default Blue Background -->
+    <color name="theme_text">#007BFF</color> <!-- Default Blue Text -->
+    <color name="blue_background">#C2D6F6</color>
+    <color name="blue_text">#007BFF</color>
+    <color name="pink_background">#FDD3DB</color>
+    <color name="pink_text">#FF7B94</color>
 
 
     <color name="bottom_nav_item_selector">#FF7B94</color>
