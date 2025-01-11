@@ -13,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,6 +65,10 @@ public class manage_child extends Fragment {
         return fragment;
     }
 
+    private FirebaseFirestore babyProfilesDB;
+    private ManageChildAdapter adapter;
+    private List<childItem> childList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +76,7 @@ public class manage_child extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        babyProfilesDB=FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -84,7 +92,8 @@ public class manage_child extends Fragment {
 
         RecyclerView recyclerView= view.findViewById(R.id.addChildRV);
 
-        List<childItem> childList = loadChildrenFromJson();
+        childList=new ArrayList<>();
+        adapter=new ManageChildAdapter(getContext(),childList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new ManageChildAdapter(getContext(),childList));
@@ -102,37 +111,21 @@ public class manage_child extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        List<childItem> childList=loadChildrenFromJson();
-        RecyclerView recyclerView=getView().findViewById(R.id.addChildRV);
-        recyclerView.setAdapter(new ManageChildAdapter(getContext(),childList));
+        loadChildrenFromFirestore();
     }
 
-    private List<childItem> loadChildrenFromJson(){
-        List<childItem> childList= new ArrayList<>();
-        try{
-            File file=new File(getContext().getFilesDir(),"children_details.json");
-            if(!file.exists()){
-                return childList;
-            }
-
-            FileInputStream fis=new FileInputStream(file);
-            byte[] data=new byte[(int)file.length()];
-            fis.read(data);
-            fis.close();
-
-            String json=new String(data, "UTF-8");
-            JSONArray jsonArray= new JSONArray(json);
-
-            for(int i=0;i<jsonArray.length();i++){
-                JSONObject jsonObject=jsonArray.getJSONObject(i);
-                String username=jsonObject.getString("username");
-                String profileImageUri=jsonObject.optString("profile_image","");
-
+    private void loadChildrenFromFirestore(){
+        babyProfilesDB.collection("babyProfilesDB").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            childList.clear();
+            for(QueryDocumentSnapshot document: queryDocumentSnapshots){
+                String username=document.getString("username");
+                String profileImageUri=document.getString("profile_image");
                 childList.add(new childItem(username,profileImageUri));
             }
-        } catch (Exception e) {
+            adapter.notifyDataSetChanged();
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(),"Failed to load child profiles", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
-        }
-        return childList;
+        });
     }
 }

@@ -199,7 +199,7 @@ public class add_baby_profile extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveDataToJsonFile();
+                saveChildProfile();
                 Navigation.findNavController(view).navigate(R.id.manageChildDest);
             }
         });
@@ -210,48 +210,6 @@ public class add_baby_profile extends Fragment {
         intent.setType("image/*");
         imagePickerLauncher.launch(Intent.createChooser(intent,"Select Picture"));
 
-    }
-    private void saveDataToJsonFile(){
-        try {
-            JSONObject babyProfile = new JSONObject();
-            babyProfile.put("username", username.getText().toString());
-            babyProfile.put("date_of_birth", dob.getText().toString());
-            babyProfile.put("height", height.getText().toString());
-            babyProfile.put("weight", weight.getText().toString());
-            babyProfile.put("blood_type", bloodType.getText().toString());
-
-            if(imageUri!=null){
-                babyProfile.put("profile_image",imageUri.toString());
-            }
-
-            JSONArray babyProfilesArray;
-            String filename="children_details.json";
-            File file=new File(getContext().getFilesDir(),filename);
-
-            if(file.exists()){
-                FileInputStream fis=new FileInputStream(file);
-                byte[] data=new byte[(int) file.length()];
-                fis.read(data);
-                fis.close();
-                String json=new String(data,"UTF-8");
-
-                babyProfilesArray=new JSONArray(json);
-            }else{
-                babyProfilesArray=new JSONArray();
-            }
-
-            babyProfilesArray.put(babyProfile);
-
-            FileWriter writer = new FileWriter(file);
-            writer.write(babyProfilesArray.toString());
-            writer.close();
-
-            Toast.makeText(getContext(), "Data Saved successfully", Toast.LENGTH_SHORT).show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(),"Error saving data",Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void saveChildProfile() {
