@@ -58,18 +58,38 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void addEvent(CalendarClass newEvent) {
         String eventDate = newEvent.getDate();
         boolean dateExists = false;
+        int insertPosition = -1;
 
+        // Find the position of the date header and check if it exists
         for (int i = 0; i < groupedItems.size(); i++) {
             if (groupedItems.get(i) instanceof String && groupedItems.get(i).equals(eventDate)) {
                 dateExists = true;
+                insertPosition = i + 1; // Set position to insert event right after the date header
                 break;
             }
         }
 
         if (dateExists) {
-            groupedItems.add(newEvent);
+            // Find the correct position to insert while maintaining sorted order (optional)
+            for (int i = insertPosition; i < groupedItems.size(); i++) {
+                if (groupedItems.get(i) instanceof CalendarClass) {
+                    CalendarClass existingEvent = (CalendarClass) groupedItems.get(i);
+                    if (existingEvent.getDate().equals(eventDate) &&
+                            newEvent.getStartTime().compareTo(existingEvent.getStartTime()) < 0) {
+                        groupedItems.add(i, newEvent);
+                        notifyDataSetChanged();
+                        return;
+                    }
+                } else {
+                    break; // Reached the next date header
+                }
+            }
+
+            // If not inserted in the loop, append to the end of this date's events
+            groupedItems.add(insertPosition, newEvent);
         } else {
-            groupedItems.add(eventDate); // Add date header if it doesn't exist
+            // If the date header doesn't exist, add the date and the event
+            groupedItems.add(eventDate); // Add date header
             groupedItems.add(newEvent);
         }
 
