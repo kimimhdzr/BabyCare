@@ -27,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +43,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class add_baby_profile extends Fragment {
@@ -112,12 +116,15 @@ public class add_baby_profile extends Fragment {
     private String originalUsername=null;
     private boolean isEditing=false;
 
+    private FirebaseFirestore addBabyProfileDB;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_add_baby_profile, container, false);
 
+        addBabyProfileDB=FirebaseFirestore.getInstance();
         username=view.findViewById(R.id.usernameTV);
         profileImageView=view.findViewById(R.id.babyPictureEdit);
         saveBtn=view.findViewById(R.id.saveBtn);
@@ -249,57 +256,43 @@ public class add_baby_profile extends Fragment {
 
     private void saveChildProfile() {
 
-        try {
-            File file = new File(requireContext().getFilesDir(), "children_details.json");
-            JSONArray jsonArray;
+        Map<String,Object> babyProfile =new HashMap<>();
+        babyProfile.put("username",username.getText().toString());
+        babyProfile.put("date_of_birth",dob.getText().toString());
+        babyProfile.put("height",height.getText().toString());
+        babyProfile.put("weight",weight.getText().toString());
+        babyProfile.put("blood_type",bloodType.getText().toString());
 
-            if (file.exists()) {
-                String json = new String(Files.readAllBytes(file.toPath()), "UTF-8");
-                jsonArray = new JSONArray(json);
-            } else {
-                jsonArray = new JSONArray();
-            }
-
-            if (isEditing) {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject childObject = jsonArray.getJSONObject(i);
-                    if (childObject.getString("username").equals(originalUsername)) {
-                        childObject.put("username", username.getText().toString());
-                        childObject.put("date_of_birth",dob.getText().toString());
-                        childObject.put("height",height.getText().toString());
-                        childObject.put("weight",weight.getText().toString());
-                        childObject.put("blood_type",bloodType.getText().toString());
-
-                        if(imageUri!=null){
-                            childObject.put("profile_image",imageUri.toString());
-                        }
-                        break;
-                    }
-                }
-            } else {
-                JSONObject newChild = new JSONObject();
-                newChild.put("username", username.getText().toString());
-                newChild.put("date_of_birth",dob.getText().toString());
-                newChild.put("height",height.getText().toString());
-                newChild.put("weight",weight.getText().toString());
-                newChild.put("blood_type",bloodType.getText().toString());
-
-                if(imageUri!=null){
-                    newChild.put("profile_image",imageUri.toString());
-                }
-
-                jsonArray.put(newChild);
-            }
-
-            FileWriter writer = new FileWriter(file);
-            writer.write(jsonArray.toString());
-            writer.close();
-
-            Toast.makeText(getContext(), isEditing ? "Profile updated successfully" : "Profile added successfully", Toast.LENGTH_SHORT).show();
-            requireActivity().onBackPressed();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Error saving profile", Toast.LENGTH_SHORT).show();
+        if(imageUri!=null){
+            babyProfile.put("profile_image",imageUri.toString());
         }
+
+        String babyProfileDB="babyProfilesDB";
+
+        if(isEditing){
+            addBabyProfileDB.collection(babyProfileDB).whereEqualTo("username",originalUsername).get().addOnSuccessListener(queryDocumentSnapshots -> {
+               for(QueryDocumentSnapshot document: queryDocumentSnapshots){
+                   addBabyProfileDB.collection(babyProfileDB).document(document.getId()).set(babyProfile).addOnSuccessListener(unused -> {
+                       Toast.makeText(getContext(),"Profile updated successfully",Toast.LENGTH_SHORT).show();
+                       requireActivity().getOnBackPressedDispatcher().onBackPressed();
+                   }).addOnFailureListener(e->{
+                       Toast.makeText(getContext(),"Error updating profile",Toast.LENGTH_SHORT).show();
+                       e.printStackTrace();
+                   });
+               }
+            }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(),"Error fetching profile for update",Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            });
+        }else{
+            addBabyProfileDB.collection(babyProfileDB).add(babyProfile).addOnSuccessListener(documentReference -> {
+                Toast.makeText(getContext(),"Profile added succesfully",Toast.LENGTH_SHORT).show();
+                requireActivity().getOnBackPressedDispatcher().onBackPressed();
+            }).addOnFailureListener(e -> {
+                Toast.makeText(getContext(),"Error adding profile",Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            });
+        }
+
     }
 }
