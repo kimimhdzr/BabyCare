@@ -138,8 +138,9 @@
         app:layout_constraintTop_toBottomOf="@id/create_account" />
 
     <LinearLayout
+        android:background="@drawable/white_rect_fully_rounded"
         android:id="@+id/linearLayout"
-        android:layout_width="175dp"
+        android:layout_width="225dp"
         android:layout_height="55dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -149,22 +150,23 @@
         app:layout_constraintTop_toBottomOf="@id/or_continue_with">
 
         <ImageButton
+
             android:id="@+id/google_signin"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginRight="10dp"
             android:elevation="4dp"
+            android:background="@android:color/transparent"
             android:scaleType="center"
             android:src="@drawable/google_color_svgrepo_com__2_" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/facebook_signin"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_marginRight="10dp"
-            android:elevation="4dp"
-            android:scaleType="center"
-            android:src="@drawable/facebook_svgrepo_com__2_" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
+            android:background="@drawable/white_rect_fully_rounded"
+            android:text="Continue with Google"/>
+
 
 
 
