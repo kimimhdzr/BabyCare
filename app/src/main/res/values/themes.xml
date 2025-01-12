@@ -23,10 +23,6 @@
         <item name="subtitleTextColor">#B3B6B9</item>
 
 
-        <item name="backgroundColor">#F8F9FA</item>
-        <item name="colorOnBackground">#000000</item>
-
-
         <item name="colorError">#B00020</item>
         <item name="colorOnError">#FFFFFF</item>
 
