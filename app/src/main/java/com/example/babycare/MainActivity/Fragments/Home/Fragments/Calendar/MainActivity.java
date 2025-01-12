@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar eventCalendar = Calendar.getInstance();
 
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("d MMMM, yyyy hh:mm a", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("d MMMM yyyy hh:mm a", Locale.getDefault());
             // Set the event's date and time to the calendar
             eventCalendar.setTime(sdf.parse(event.getDate() + " " + event.getStartTime()));
         } catch (Exception e) {
