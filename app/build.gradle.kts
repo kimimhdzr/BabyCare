@@ -55,4 +55,7 @@ dependencies {
     // Alarm Manager and Notification Manager
     implementation("androidx.core:core:1.12.0")
     implementation("androidx.work:work-runtime:2.8.1")
+
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.picasso:picasso:2.71828")  // Add Picasso dependency
 }
