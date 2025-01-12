@@ -200,7 +200,6 @@ public class add_baby_profile extends Fragment {
             @Override
             public void onClick(View view) {
                 saveChildProfile();
-                Navigation.findNavController(view).navigate(R.id.manageChildDest);
             }
         });
     }
@@ -220,6 +219,22 @@ public class add_baby_profile extends Fragment {
         babyProfile.put("height",height.getText().toString());
         babyProfile.put("weight",weight.getText().toString());
         babyProfile.put("blood_type",bloodType.getText().toString());
+
+        StringBuilder allergiesStringBuilder=new StringBuilder();
+        for(allergyItem allergy: allergiesList){
+            if(allergy.getAllergyInput()!=null && !allergy.getAllergyInput().isEmpty()){
+                allergiesStringBuilder.append(allergy.getAllergyInput()).append(", ");
+            }
+        }
+
+        String allergiesString=allergiesStringBuilder.toString().trim();
+        if(allergiesString.endsWith(",")){
+            allergiesString=allergiesString.substring(0,allergiesString.length()-1);
+        }
+
+        if(!allergiesString.isEmpty()){
+            babyProfile.put("allergies",allergiesString);
+        }
 
         if(imageUri!=null){
             babyProfile.put("profile_image",imageUri.toString());

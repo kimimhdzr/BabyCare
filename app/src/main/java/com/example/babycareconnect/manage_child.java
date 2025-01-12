@@ -1,5 +1,7 @@
 package com.example.babycareconnect;
 
+import static android.service.controls.ControlsProviderService.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +11,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +96,7 @@ public class manage_child extends Fragment {
         RecyclerView recyclerView= view.findViewById(R.id.addChildRV);
 
         childList=new ArrayList<>();
+        loadChildrenFromFirestore();
         adapter=new ManageChildAdapter(getContext(),childList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -114,6 +118,7 @@ public class manage_child extends Fragment {
         loadChildrenFromFirestore();
     }
 
+    //Fetching problem
     private void loadChildrenFromFirestore(){
         babyProfilesDB.collection("babyProfilesDB").get().addOnSuccessListener(queryDocumentSnapshots -> {
             childList.clear();
@@ -123,9 +128,11 @@ public class manage_child extends Fragment {
                 childList.add(new childItem(username,profileImageUri));
             }
             adapter.notifyDataSetChanged();
+            Log.d(TAG, "Children successfully loaded and adapter notified.");
         }).addOnFailureListener(e -> {
             Toast.makeText(getContext(),"Failed to load child profiles", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
+            Log.e(TAG, "Error loading children: ", e);
         });
     }
 }
