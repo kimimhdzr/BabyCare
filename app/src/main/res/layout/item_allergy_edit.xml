@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="330dp"
+    android:layout_height="35dp"
+    android:layout_marginBottom="3dp">
+    <TextView
+        android:paddingStart="3dp"
+        android:gravity="center_vertical"
+        android:id="@+id/allergysubtitle"
+        android:fontFamily="@font/interbold"
+        android:textSize="17sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/white_rect_blue_line_below"/>
+
+
+    <ImageButton
+        android:id="@+id/deleteAllergy"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/x_icon"
+        android:layout_alignParentEnd="true"
+
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

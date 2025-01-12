@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity.Fragments.Profile.Fragments.ManageChildren.ManageChildren">
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
+
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/interbold"
+        android:textSize="26sp"
+        android:text="Manage Your Children"/>
 
-</FrameLayout>
+    <FrameLayout
+        android:layout_marginTop="24dp"
+        android:layout_width="370dp"
+        android:layout_height="470dp"
+        android:orientation="vertical"
+        android:elevation="8dp"
+
+        android:background="@drawable/white_rect_fully_rounded">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/child_list"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/add_baby"
+        android:layout_marginTop="15dp"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:background="@drawable/signin_submit"
+        android:text="Add Child"
+        android:textColor="@color/white"
+        android:fontFamily="@font/interbold"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+
+</LinearLayout>

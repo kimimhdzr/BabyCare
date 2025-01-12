@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/tip_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/homelander"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/tip_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Help your baby strengthen their muscles with a few minutes of tummy time each day. Use toys to keep it fun!"
+        android:textSize="13sp"
+        android:textAlignment="viewEnd"
+        android:fontFamily="@font/inter_medium"
+        android:background="@android:color/transparent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="22dp"/>
+
+    <TextView
+        android:id="@+id/tip_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Tummy Tips"
+        android:textAlignment="viewEnd"
+        android:textSize="22sp"
+        android:fontFamily="@font/inter_semibold"
+        android:background="@android:color/transparent"
+        android:layout_above="@id/tip_desc"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        />
+
+
+
+
+
+</RelativeLayout>

@@ -13,7 +13,20 @@
           "package_name": "com.example.babycare"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "874285489039-t18kmo5mkid679m5e2bep23c2m3haqji.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.babycare",
+            "certificate_hash": "23d36ae1ccb86cbd603087b01a75a449795be974"
+          }
+        },
+        {
+          "client_id": "874285489039-22ibe5jq4pbt18i6tnsnpqljuukpbv7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDZK3IaG4rLZYI4lUUA-lsdtseWD_L518g"
@@ -21,26 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:874285489039:android:389321148af237261bc9fa",
-        "android_client_info": {
-          "package_name": "com.example.babycareconnect"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDZK3IaG4rLZYI4lUUA-lsdtseWD_L518g"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874285489039-22ibe5jq4pbt18i6tnsnpqljuukpbv7s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
