@@ -72,7 +72,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         try {
             Date newEventDate = DATE_FORMAT.parse(eventDate);
 
-            // Find the correct position to insert the event
+            // Find the correct position to insert the event by date
             for (int i = 0; i < groupedItems.size(); i++) {
                 if (groupedItems.get(i) instanceof String) {
                     String currentDateStr = (String) groupedItems.get(i);
@@ -90,25 +90,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
             if (dateExists) {
-                // Insert event under the existing date header while maintaining order by start time
-                for (int i = insertPosition; i < groupedItems.size(); i++) {
-                    if (groupedItems.get(i) instanceof CalendarClass) {
-                        CalendarClass existingEvent = (CalendarClass) groupedItems.get(i);
-                        if (existingEvent.getDate().equals(eventDate) &&
-                                newEvent.getStartTime().compareTo(existingEvent.getStartTime()) < 0) {
-                            groupedItems.add(i, newEvent);
-                            notifyDataSetChanged();
-                            return;
-                        }
-                    } else {
-                        break; // Reached the next date header
-                    }
-                }
-
-                // Append to the end of this date's events if no earlier position is found
+                // Insert the event under the existing date header
                 groupedItems.add(insertPosition, newEvent);
+
+                // Sort events under the same date by start time
+                sortEventsByDate(eventDate);
             } else {
-                // Insert the new date header and the event
+                // Insert the new date header and event in chronological order
                 if (insertPosition == -1) {
                     // No later date exists, so append at the end
                     groupedItems.add(eventDate);
@@ -123,6 +111,34 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             notifyDataSetChanged();
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Helper method to sort events under a specific date
+    private void sortEventsByDate(String date) {
+        // Find the position of the date header
+        for (int i = 0; i < groupedItems.size(); i++) {
+            if (groupedItems.get(i) instanceof String && groupedItems.get(i).equals(date)) {
+                // We found the date header, now find the corresponding events below it
+                int startPos = i + 1;
+                int endPos = startPos;
+
+                // Loop through to find the last event for this date
+                while (endPos < groupedItems.size() && groupedItems.get(endPos) instanceof CalendarClass &&
+                        ((CalendarClass) groupedItems.get(endPos)).getDate().equals(date)) {
+                    endPos++;
+                }
+
+                // Sort the events by start time
+                List<CalendarClass> eventsForDate = (List<CalendarClass>) (List<?>) groupedItems.subList(startPos, endPos);
+                eventsForDate.sort((event1, event2) -> event1.getStartTime().compareTo(event2.getStartTime()));
+
+                // Update the groupedItems with sorted events
+                for (int j = 0; j < eventsForDate.size(); j++) {
+                    groupedItems.set(startPos + j, eventsForDate.get(j));
+                }
+                break;
+            }
         }
     }
 
