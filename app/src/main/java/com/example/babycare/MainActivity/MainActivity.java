@@ -1,8 +1,14 @@
 package com.example.babycare.MainActivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavArgument;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,13 +18,19 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.example.babycare.MainActivity.Fragments.Home.AdapterInt;
+import com.example.babycare.MainActivity.Fragments.Home.BabyCardAdapter;
+import com.example.babycare.MainActivity.Fragments.Home.Home;
 import com.example.babycare.MainActivity.Fragments.Home.TipsAdapter;
 import com.example.babycare.MainActivity.Fragments.Home.TipsCircle;
+import com.example.babycare.MainActivity.Fragments.Profile.Fragments.ManageChildren.ManageChildren;
+import com.example.babycare.MainActivity.Fragments.Profile.MainProfile;
+import com.example.babycare.Objects.Baby;
 import com.example.babycare.Objects.Tip;
 import com.example.babycare.Objects.User;
 import com.example.babycare.R;
@@ -39,6 +51,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.bundle.BundledQueryOrBuilder;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
     private TipsCircle tipsCircle;
 
+
     private String UID;
+    private SharedUserModel sharedUserModel;
     public User session_user;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -66,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+
         Bundle bundle = getIntent().getExtras();
         UID = bundle.getString("session_id");
         fetchSessionUser();
@@ -77,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
         NavController navController = navHostFragment.getNavController();
 
+
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
@@ -84,28 +101,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void fetchSessionUser(){
-
-        db.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db= FirebaseFirestore.getInstance();
+        db.collection("users").document(UID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()){
+                        String usename = doc.getString("username");
+                        String type = doc.getString("type");
 
-                if (e !=null)
-                {
+                        User user = new User();
+                        user.setStatus(type);
+                        user.setUsername(usename);
 
-                }
+                        updateUIWithUser(user);
 
-                for (DocumentChange documentChange : documentSnapshots.getDocumentChanges())
-                {
-                    String   userID = String.valueOf(documentChange.getDocument().getId());
-                    if(userID.equals(UID)){
-                        User test = new User();
-
-                        test.setUsername(documentChange.getDocument().getData().get("username").toString());
-                        test.setStatus(documentChange.getDocument().getData().get("type").toString());
-
-                        updateUIWithUser(test);
-                        return;
                     }
+                }else {
+
                 }
             }
         });
@@ -113,16 +127,77 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void fetchSessionChildren(User user){
+        db.collection("babies")
+                .whereEqualTo("parent", session_user.getUsername()) // Filter by parent's name
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        ArrayList<Baby> fetchChildren = new ArrayList<>();
+                        QuerySnapshot querySnapshot = task.getResult();
+                        if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                            for (DocumentSnapshot document : querySnapshot) {
+                                // Retrieve baby data here
+                                String babyName = document.getString("name");
+                                String parentName = document.getString("parent");
+                                String bloodType = document.getString("bloodtype");
+                                String birthDate = document.getString("birthday");
+                                String height = document.getString("height");
+                                String weight = document.getString("weight");
+                                ArrayList<String> allergies = (ArrayList<String>) document.get("allergies");
+
+                                Baby baby = new Baby(parentName, babyName, bloodType, birthDate,height,weight);
+                                baby.setAllergies(allergies);
+                                fetchChildren.add(baby);
+
+                                user.setChildren(fetchChildren);
+
+                                updateUIWithUser2(user);
+
+                           }
+                        } else {
+                            Log.d("Firestore", "No babies found for the parent.");
+                        }
+                    } else {
+                        Log.e("Firestore", "Error fetching babies", task.getException());
+                    }
+                });
+    }
+
+    private void updateUIWithUser2(User user) {
+        RecyclerView myChildren = findViewById(R.id.MyChildrenRecycler);
+        BabyCardAdapter myBabiesAdapter = new BabyCardAdapter(user.getChildren());
+        myChildren.setAdapter(myBabiesAdapter);
+        myChildren.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        if(sharedUserModel == null){
+            sharedUserModel = new ViewModelProvider(this).get(SharedUserModel.class);
+            sharedUserModel.setSharedData(user);
+        }
+    }
+
     private void updateUIWithUser(User user) {
-        TextView usernameTextView = findViewById(R.id.sessionusername);
+
         session_user = new User();
         session_user.setUsername(user.getUsername());
         session_user.setStatus(user.getStatus());
 
-        usernameTextView.setText(session_user.getUsername());
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
+        NavController navController = navHostFragment.getNavController();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("session_user", session_user);
+
+        if(sharedUserModel == null){
+            sharedUserModel = new ViewModelProvider(this).get(SharedUserModel.class);
+            sharedUserModel.setSharedData(user);
+        }
+
+        fetchSessionChildren(user);
 
 
     }
+
 
 
 

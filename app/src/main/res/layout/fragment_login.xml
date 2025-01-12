@@ -157,7 +157,8 @@
             android:scaleType="center"
             android:src="@drawable/google_color_svgrepo_com__2_" />
 
-        <ImageButton
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_signin"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_marginRight="10dp"
@@ -165,12 +166,6 @@
             android:scaleType="center"
             android:src="@drawable/facebook_svgrepo_com__2_" />
 
-        <ImageButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:elevation="4dp"
-            android:scaleType="center"
-            android:src="@drawable/phone_svgrepo_com" />
 
 
     </LinearLayout>

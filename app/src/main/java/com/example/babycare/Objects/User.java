@@ -28,6 +28,7 @@ public class User implements Serializable {
         return username;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -38,6 +39,11 @@ public class User implements Serializable {
 
     public ArrayList<Baby> getChildren() {
         return children;
+    }
+
+
+    public void addChildren(Baby baby){
+        children.add(baby);
     }
 
     public void setUsername(String username) {

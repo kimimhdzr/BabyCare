@@ -2,7 +2,9 @@ package com.example.babycare.MainActivity.Fragments.Home;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,9 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.babycare.MainActivity.SharedUserModel;
 import com.example.babycare.Objects.Baby;
 import com.example.babycare.Objects.Tip;
+import com.example.babycare.Objects.User;
 import com.example.babycare.R;
 
 import java.util.ArrayList;
@@ -23,9 +28,17 @@ public class Home extends Fragment implements AdapterInt {
 
 
     private TipsCircle tipsCircle;
+    private User session_user;
+
+    private SharedUserModel sharedUserModel;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -56,20 +69,7 @@ public class Home extends Fragment implements AdapterInt {
             }
         });
 
-        Baby baby1 = new Baby("Daddy Hafiz","Baby Kimi","A-","2023-05-06",175,80);
-        baby1.addAllergy("Daddy's baby batter");
-        baby1.addAllergy("Peanut");
-        Baby baby2 = new Baby("Daddy Hafiz","Baby Hisham","O-","2023-12-06",11,12);
-        baby2.addAllergy("Mommy's Milk");
-        ArrayList<Baby> babylist = new ArrayList<>();
-        babylist.add(baby1);
-        babylist.add(baby2);
 
-
-        RecyclerView myChildren = view.findViewById(R.id.MyChildrenRecycler);
-        BabyCardAdapter myBabiesAdapter = new BabyCardAdapter(babylist);
-        myChildren.setAdapter(myBabiesAdapter);
-        myChildren.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
 
 
         RelativeLayout toCalendar = view.findViewById(R.id.toCalendarPage);

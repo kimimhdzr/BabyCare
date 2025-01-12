@@ -127,6 +127,9 @@
         <action
             android:id="@+id/nav_to_BabyProfile"
             app:destination="@id/BabyProfile" />
+        <action
+            android:id="@+id/action_EditBabyProfile_to_ManageChildren"
+            app:destination="@id/ManageChildren" />
     </fragment>
 
     <!--    Home Contents End  -->
@@ -193,6 +196,9 @@
         <action
             android:id="@+id/nav_to_AddChildren"
             app:destination="@id/AddChildren" />
+        <action
+            android:id="@+id/Nav_to_EditBabyProfile2"
+            app:destination="@id/EditBabyProfile" />
 
     </fragment>
 

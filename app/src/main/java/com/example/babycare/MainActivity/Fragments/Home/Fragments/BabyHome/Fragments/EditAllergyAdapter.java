@@ -25,6 +25,10 @@ public class EditAllergyAdapter extends RecyclerView.Adapter<EditAllergyAdapter.
         this.deleteListener = listener;
     }
 
+    public ArrayList<String> getAllergies() {
+        return allergies;
+    }
+
     // ViewHolder Class
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView itemText;

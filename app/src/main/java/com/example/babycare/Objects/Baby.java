@@ -1,18 +1,23 @@
 package com.example.babycare.Objects;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Baby implements Serializable {
+    String ID;
     String parent;
     String name,bloodtype,birthday;
     int month,week,years;
-    int height,weight;
+    String height,weight;
     ArrayList<String> allergies;
 
+    String imageURI;
 
-    public Baby(String parent,String name, String bloodtype,String birthday,int height,int weight){
+    long time;
+
+
+    public Baby(String parent,String name, String bloodtype,String birthday,String height,String weight){
         this.parent = parent;
         this.name = name;
         this.bloodtype = bloodtype;
@@ -28,6 +33,14 @@ public class Baby implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public String getImageURI() {
+        return imageURI;
+    }
+
+    public void setImageURI(String imageURI) {
+        this.imageURI = imageURI;
     }
 
     public String getBloodtype() {
@@ -62,23 +75,63 @@ public class Baby implements Serializable {
         this.years = years;
     }
 
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBloodtype(String bloodtype) {
+        this.bloodtype = bloodtype;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
     public void addAllergy(String allergy){
         allergies.add(allergy);
     }
 
-    public int getHeight() {
+    public void setAllergies(ArrayList<String> allergies) {
+        this.allergies = allergies;
+    }
+
+    public String getHeight() {
         return height;
     }
 
-    public int getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public ArrayList<String> getAllAllergies(){
+    public ArrayList<String> getAllergies(){
         return allergies;
     }
 
     public void removeAllergy(int position){
         allergies.remove(position);
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

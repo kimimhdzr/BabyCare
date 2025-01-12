@@ -22,10 +22,12 @@ import android.widget.Toast;
 
 import com.example.babycare.MainActivity.MainActivity;
 import com.example.babycare.R;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -160,40 +162,71 @@ public class SignUp2 extends Fragment {
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(input_email, input_pass)
-                .addOnCompleteListener(getActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
+        Task<Boolean> checkUsername = checkExistingUsername(username);
+        checkUsername.addOnSuccessListener(exists -> {
+            // Conditional logic based on whether the username exists
+            if (exists) {
+                usernameEditText.setError("Username already existed");
+            } else {
+                mAuth.createUserWithEmailAndPassword(input_email, input_pass)
+                        .addOnCompleteListener(getActivity(), task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
 
-                        Map<String, Object> userProfile = new HashMap<>();
-                        userProfile.put("username", username);
-                        userProfile.put("profilePic", "");
-                        userProfile.put("phoneNumber", "");
-                        userProfile.put("createdAt", FieldValue.serverTimestamp());
-                        userProfile.put("type", parent_status);
+                                Map<String, Object> userProfile = new HashMap<>();
+                                userProfile.put("username", username);
+                                userProfile.put("profilePic", "");
+                                userProfile.put("phoneNumber", "");
+                                userProfile.put("createdAt", FieldValue.serverTimestamp());
+                                userProfile.put("type", parent_status);
 
-                        // Save the User Profile into Firestore
-                        db.collection("users")
-                                .document(user.getUid())
-                                .set(userProfile)
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(getContext(), "Sign Up Successful", Toast.LENGTH_SHORT).show();
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("session_id",user.getUid());
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                    getActivity().finish();
+                                // Save the User Profile into Firestore
+                                db.collection("users")
+                                        .document(user.getUid())
+                                        .set(userProfile)
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(getContext(), "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("session_id",user.getUid());
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                            getActivity().finish();
 
-                                }).addOnFailureListener(e -> {
-                                    Toast.makeText(getContext(), "Failed to save user info", Toast.LENGTH_SHORT).show();
-                                });
+                                        }).addOnFailureListener(e -> {
+                                            Toast.makeText(getContext(), "Failed to save user info", Toast.LENGTH_SHORT).show();
+                                        });
 
+                            } else {
+                                Toast.makeText(getContext(), "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                NavController navController = NavHostFragment.findNavController(this);
+                                navController.navigate(R.id.nav_to_SignUp1);
+                            }
+                        });
+            }
+        }).addOnFailureListener(e -> {
+            // Handle failure (e.g., network errors)
+            Toast.makeText(getContext(),"Failed to check username",Toast.LENGTH_SHORT).show();
+        });
+
+
+
+    }
+
+    public Task<Boolean> checkExistingUsername(String username) {
+
+
+        return db.collection("users")
+                .whereEqualTo("username", username) // Filter by username field
+                .get()
+                .continueWith(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        return !querySnapshot.isEmpty(); // Return true if the username exists, false otherwise
                     } else {
-                        Toast.makeText(getContext(), "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                        NavController navController = NavHostFragment.findNavController(this);
-                        navController.navigate(R.id.nav_to_SignUp1);
+                        // If the query failed, return false
+                        return false;
                     }
                 });
     }

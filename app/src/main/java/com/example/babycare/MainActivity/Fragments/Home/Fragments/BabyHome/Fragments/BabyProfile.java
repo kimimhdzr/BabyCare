@@ -7,6 +7,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,8 @@ import android.widget.TextView;
 import com.example.babycare.Objects.Baby;
 import com.example.babycare.R;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class BabyProfile extends Fragment {
 
@@ -28,6 +30,8 @@ public class BabyProfile extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_baby_profile, container, false);
         session_baby = (Baby) getArguments().getSerializable("Baby");
+
+        calculateMonthsandWeeks();
 
         TextView baby_name = view.findViewById(R.id.baby_name);
         baby_name.setText(session_baby.getName());
@@ -48,8 +52,9 @@ public class BabyProfile extends Fragment {
         TextView baby_weight = view.findViewById(R.id.baby_weight);
         baby_weight.setText(session_baby.getWeight()+" kg");
 
+
         RecyclerView allergies_list = view.findViewById(R.id.allergy_list);
-        AllergyAdapter allergyAdapter = new AllergyAdapter(session_baby.getAllAllergies());
+        AllergyAdapter allergyAdapter = new AllergyAdapter(session_baby.getAllergies());
         allergies_list.setAdapter(allergyAdapter);
         allergies_list.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
@@ -59,7 +64,7 @@ public class BabyProfile extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle baby_bundle = new Bundle();
-                baby_bundle.putSerializable("Baby",session_baby);
+                baby_bundle.putSerializable("session_baby",session_baby);
                 Navigation.findNavController(view).navigate(R.id.nav_to_EditBabyProfile,baby_bundle);
             }
         });
@@ -86,5 +91,30 @@ public class BabyProfile extends Fragment {
 
 
         return view;
+    }
+
+    public void calculateMonthsandWeeks(){
+
+        LocalDate birthday = LocalDate.parse(session_baby.getBirthday());
+        LocalDate today = LocalDate.now();
+
+        Log.d("TEST","TR"+ birthday);
+        Log.d("TEST","TR"+ today);
+
+        Period diff = Period.between(birthday,today);
+        Log.d("TEST","TR"+ diff);
+
+
+
+        double weeks = diff.getDays() / 7.0;
+        Log.d("TEST","TEST" + weeks);
+
+        Log.d("TEST","TR"+ diff.getMonths());
+        Log.d("TEST","TR"+ diff.getYears());
+        Log.d("TEST","TR"+ weeks);
+
+        session_baby.setYears(diff.getYears());
+        session_baby.setMonth(diff.getMonths());
+        session_baby.setWeek((int)weeks);
     }
 }

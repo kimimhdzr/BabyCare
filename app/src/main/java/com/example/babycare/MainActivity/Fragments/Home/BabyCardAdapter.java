@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.babycare.Objects.Baby;
 import com.example.babycare.Objects.Tip;
 import com.example.babycare.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BabyCardAdapter extends RecyclerView.Adapter<BabyCardAdapter.MyViewHolder> {
     private AdapterInt listener;
@@ -30,11 +33,13 @@ public class BabyCardAdapter extends RecyclerView.Adapter<BabyCardAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView BabyNameText;
         Button toBabyHome;
+        CircleImageView profileImageView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             BabyNameText = itemView.findViewById(R.id.Childname);
             toBabyHome = itemView.findViewById(R.id.BtnToBabyHome);
+            profileImageView = itemView.findViewById(R.id.baby_pfp);
         }
     }
 
@@ -59,6 +64,13 @@ public class BabyCardAdapter extends RecyclerView.Adapter<BabyCardAdapter.MyView
                 Navigation.findNavController(view).navigate(R.id.nav_to_BabyHome,bundle);
             }
         });
+
+          // ImageView in your layout
+
+// Use Picasso to load the image from the URL into the ImageView
+        Picasso.get()
+                .load(children.get(position).getImageURI())  // Pass the image URL
+                .into(holder.profileImageView);  // Set the ImageView to display the image
 
 
     }

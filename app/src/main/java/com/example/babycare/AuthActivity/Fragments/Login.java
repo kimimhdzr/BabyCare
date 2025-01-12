@@ -25,6 +25,14 @@ import android.widget.Toast;
 import com.example.babycare.MainActivity.Fragments.Home.Home;
 import com.example.babycare.MainActivity.MainActivity;
 import com.example.babycare.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.SignInCredential;
@@ -37,7 +45,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.TotpMultiFactorAssertion;
 import com.google.gson.Gson;
@@ -45,6 +55,8 @@ import com.google.gson.GsonBuilder;
 
 public class Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
     private FirebaseAuth mAuth;
+
+    private CallbackManager mCallbackManager;
     private static final int RC_SIGN_IN = 9001;
     private EditText email, password;
     private Button loginButton, signupButton;
@@ -68,6 +80,10 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         loginButton = view.findViewById(R.id.sign_in);
         signupButton = view.findViewById(R.id.create_account);
         forgotpassTxtView = view.findViewById(R.id.forgot_password);
+
+        //FacebookSdk.setApplicationId("955825376045264");
+        //FacebookSdk.sdkInitialize(requireContext());
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_client_id))
@@ -137,6 +153,8 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         });
 
 
+
+
         ImageButton googleSignIn = view.findViewById(R.id.google_signin);
 
 
@@ -146,6 +164,20 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 signInwithGoogle(mGoogleApiClient);
             }
         });
+
+        //FACEBOOK SIGNIN
+
+        //mCallbackManager = CallbackManager.Factory.create();
+        //LoginButton signinFacebook = view.findViewById(R.id.facebook_signin);
+        //signinFacebook.setReadPermissions("email","public_profile");
+        //signinFacebook.setFragment(this);
+        //.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            //@Override
+            //public void onSuccess(LoginResult loginResult) {
+                //handleFacebookAccessToken(loginResult.getAccessToken());
+            //}
+
+       // });
 
 
         return view;
@@ -206,6 +238,46 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 });
     }
 
+    private void handleFacebookAccessToken(AccessToken token) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(requireActivity(), task -> {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(getActivity(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }else{
+
+                        Log.d("TEST","FR" + task.getResult().getAdditionalUserInfo().isNewUser());
+
+                        if(task.getResult().getAdditionalUserInfo().isNewUser()){
+
+                            String UID = mAuth.getCurrentUser().getUid();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("UID",UID);
+
+
+                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_auth);
+                            navController.navigate(R.id.nav_to_SignUp2,bundle);
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Authentication pass.",
+                                    Toast.LENGTH_SHORT).show();
+
+
+                            String UID = mAuth.getCurrentUser().getUid();
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.putExtra("session_id",UID);
+                            startActivity(intent);
+                            getActivity().finish();
+
+                        }
+
+
+                    }
+                });
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -220,6 +292,8 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             } else {
                 Toast.makeText(getActivity(),"There was a trouble signing in-Please try again",Toast.LENGTH_SHORT).show();;
             }
+        }else{
+            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 

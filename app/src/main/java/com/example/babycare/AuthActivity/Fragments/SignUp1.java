@@ -143,28 +143,47 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
             return;
         }
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email, password) // Using a dummy password to check if the email is registered
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // If sign-in is successful, the email is registered
-                            emailEditText.setError("Email is already in use");
-                        } else {
-                            // Handle exceptions like if email is not found
+        checkRegisteredEmail(email)
+                .addOnSuccessListener(isRegistered -> {
+                    if (isRegistered) {
+                        emailEditText.setError("Email is required");
+                    } else {
+                        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                        mAuth.signInWithEmailAndPassword(email, password) // Using a dummy password to check if the email is registered
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // If sign-in is successful, the email is registered
+                                            emailEditText.setError("Email is already in use");
+                                        } else {
+                                            // Handle exceptions like if email is not found
 
-                                // Email is not registered yet, proceed with the next step
-                                Bundle bundle = new Bundle();
-                                bundle.putString("input_email", email);
-                                bundle.putString("input_pass", password);
-                                // Proceed to the next step (e.g., navigate to SignUp2)
-                                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_auth);
-                                navController.navigate(R.id.nav_to_SignUp2, bundle);
+                                            // Email is not registered yet, proceed with the next step
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("input_email", email);
+                                            bundle.putString("input_pass", password);
+                                            // Proceed to the next step (e.g., navigate to SignUp2)
+                                            NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_auth);
+                                            navController.navigate(R.id.nav_to_SignUp2, bundle);
 
-                        }
+                                        }
+                                    }
+                                });
                     }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure (e.g., network errors)
+                    System.err.println("Error checking email: " + e.getMessage());
                 });
+
+
+
+
+
+
+
+
     }
 
     protected void signInwithGoogle(GoogleApiClient mGoogleApiClient){
@@ -241,5 +260,13 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    public Task<Boolean> checkRegisteredEmail(String email) {
+        // Check if the email is already associated with any account
+        return mAuth.fetchSignInMethodsForEmail(email)
+                .continueWith(task -> !task.getResult().getSignInMethods().isEmpty());
+    }
+
+
 
 }

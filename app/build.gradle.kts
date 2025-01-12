@@ -53,4 +53,5 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.picasso:picasso:2.71828")  // Add Picasso dependency
 }

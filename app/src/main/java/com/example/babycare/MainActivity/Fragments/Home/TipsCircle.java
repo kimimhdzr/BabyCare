@@ -27,7 +27,6 @@ public class TipsCircle extends RecyclerView.Adapter<TipsCircle.MyViewHolder> {
     // ViewHolder Class
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout frame;
-        TextView allergy;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
