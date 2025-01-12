@@ -52,12 +52,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    // Material.io
-    implementation("com.google.android.material:material:1.12.0")
-
-    // Material Time Picker
-    implementation("com.google.android.material:material:1.12.0")
-
     // Alarm Manager and Notification Manager
     implementation("androidx.core:core:1.12.0")
     implementation("androidx.work:work-runtime:2.8.1")

@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             Calendar selectedCalendar = Calendar.getInstance();
             selectedCalendar.set(year, month, dayOfMonth);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM, yyyy", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
             selectedDate = dateFormat.format(selectedCalendar.getTime());
             TVDateDisplay.setText(selectedDate);
             Log.d("Selected Date", "Selected Date: " + selectedDate); // Debug log for selected date
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     private void setCurrentDate() {
         // Get the current date
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM, yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM yyyy", Locale.getDefault());
         String currentDate = dateFormat.format(calendar.getTime());
 
         // Set the current date to the TextView
