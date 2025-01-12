@@ -87,9 +87,10 @@ public class MainActivity extends AppCompatActivity {
         sharedUserModel = new ViewModelProvider(this).get(SharedUserModel.class);
 
 
+
         Bundle bundle = getIntent().getExtras();
         UID = bundle.getString("session_id");
-        fetchSessionUser(sharedUserModel);
+        sharedUserModel.fetchUserData(UID);
         // Initialize profileManager (example, adjust as needed)
 
         bottomNavigationView = findViewById(R.id.bottomNavView);

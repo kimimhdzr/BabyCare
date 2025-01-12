@@ -7,15 +7,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.babycare.MainActivity.SharedUserModel;
 import com.example.babycare.Objects.User;
 import com.example.babycare.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import org.w3c.dom.Text;
 
@@ -63,7 +68,14 @@ public class MainProfile extends Fragment {
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.nav_to_EditProfile2);
+                boolean googleUser = CheckIfGoogleProvider();
+                if(googleUser){
+                    Toast.makeText(getContext(),"Google User",Toast.LENGTH_LONG).show();
+
+                }
+                else{
+                    Navigation.findNavController(view).navigate(R.id.nav_to_EditProfile2);
+                }
             }
         });
 
@@ -71,5 +83,19 @@ public class MainProfile extends Fragment {
 
 
         return view;
+    }
+
+    public boolean CheckIfGoogleProvider(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            for (UserInfo profile : user.getProviderData()) {
+                String providerId = profile.getProviderId();
+                if ("google.com".equals(providerId)) {
+                    return true;
+                }
+            }
+
+
+        return false;
     }
 }

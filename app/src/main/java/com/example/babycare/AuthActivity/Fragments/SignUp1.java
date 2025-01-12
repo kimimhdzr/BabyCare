@@ -54,7 +54,7 @@ import java.util.Locale;
 
 public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
     final int RC_SIGN_IN = 100;
-    GoogleSignInClient mGoogleSignInClient;
+    GoogleApiClient mGoogleApiClient;
     Context context;
     public FirebaseAuth mAuth;
     private EditText emailEditText, passwordEditText, confirmPasswordEditText;
@@ -72,7 +72,7 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
                 .requestEmail()
                 .build();
 
-        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .enableAutoManage(getActivity(), this::onConnectionFailed)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
@@ -92,7 +92,7 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
 
 
         //Register using Email and Password
-        emailEditText = view.findViewById(R.id.email);
+        emailEditText = view.findViewById(R.id.input_email_signup);
         passwordEditText = view.findViewById(R.id.password);
         confirmPasswordEditText = view.findViewById(R.id.confirm_pass);
         signUpButton = view.findViewById(R.id.sign_up);
@@ -146,7 +146,7 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
         checkRegisteredEmail(email)
                 .addOnSuccessListener(isRegistered -> {
                     if (isRegistered) {
-                        emailEditText.setError("Email is required");
+                        emailEditText.setError("Email has already been registered");
                     } else {
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         mAuth.signInWithEmailAndPassword(email, password) // Using a dummy password to check if the email is registered
@@ -163,6 +163,8 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
                                             Bundle bundle = new Bundle();
                                             bundle.putString("input_email", email);
                                             bundle.putString("input_pass", password);
+                                            mGoogleApiClient.stopAutoManage(getActivity());
+                                            mGoogleApiClient.disconnect();
                                             // Proceed to the next step (e.g., navigate to SignUp2)
                                             NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment_auth);
                                             navController.navigate(R.id.nav_to_SignUp2, bundle);
@@ -249,6 +251,18 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
 
                 GoogleSignInAccount acct = result.getSignInAccount();
                 ;
+                checkRegisteredEmail(acct.getEmail())
+                        .addOnSuccessListener(isRegistered -> {
+                            if (isRegistered) {
+                                Toast.makeText(getActivity(),"Email is already registered",Toast.LENGTH_LONG);
+                            } else {
+                                firebaseAuthWithGoogle(acct);
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            // Handle failure (e.g., network errors)
+                            System.err.println("Error checking email: " + e.getMessage());
+                        });
                 firebaseAuthWithGoogle(acct);
             } else {
                 Toast.makeText(getActivity(),"There was a trouble signing in-Please try again",Toast.LENGTH_SHORT).show();;

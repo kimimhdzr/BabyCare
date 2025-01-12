@@ -164,7 +164,6 @@ public class SignUp2 extends Fragment {
 
         Task<Boolean> checkUsername = checkExistingUsername(username);
         checkUsername.addOnSuccessListener(exists -> {
-            // Conditional logic based on whether the username exists
             if (exists) {
                 usernameEditText.setError("Username already existed");
             } else {
@@ -198,10 +197,10 @@ public class SignUp2 extends Fragment {
                                         });
 
                             } else {
-                                Toast.makeText(getContext(), "Sign Up Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "User has already registered with Google", Toast.LENGTH_SHORT).show();
 
                                 NavController navController = NavHostFragment.findNavController(this);
-                                navController.navigate(R.id.nav_to_SignUp1);
+                                navController.popBackStack();
                             }
                         });
             }
@@ -230,4 +229,6 @@ public class SignUp2 extends Fragment {
                     }
                 });
     }
+
+
 }
