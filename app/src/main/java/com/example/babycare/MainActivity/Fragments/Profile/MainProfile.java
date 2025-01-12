@@ -63,7 +63,7 @@ public class MainProfile extends Fragment {
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.nav_to_EditProfile);
+                Navigation.findNavController(view).navigate(R.id.nav_to_EditProfile2);
             }
         });
 

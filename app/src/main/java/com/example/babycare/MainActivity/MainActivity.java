@@ -51,6 +51,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.bundle.BundledQueryOrBuilder;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,6 +60,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     //MyDatabaseHelper dbHelper;
     private BottomNavigationView bottomNavigationView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,27 +84,38 @@ public class MainActivity extends AppCompatActivity {
         // Initialize FirebaseAuth and Firestore
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        sharedUserModel = new ViewModelProvider(this).get(SharedUserModel.class);
 
 
         Bundle bundle = getIntent().getExtras();
         UID = bundle.getString("session_id");
-        fetchSessionUser();
+        fetchSessionUser(sharedUserModel);
         // Initialize profileManager (example, adjust as needed)
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
+
+
+
 
         // Set up NavController from NavHostFragment
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
         NavController navController = navHostFragment.getNavController();
 
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("UID", UID);
+
+        navController.setGraph(R.navigation.main_navigation, bundle2);
 
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+
+
+
     }
 
 
-    public void fetchSessionUser(){
+    public void fetchSessionUser(SharedUserModel sharedUserModel){
         db= FirebaseFirestore.getInstance();
         db.collection("users").document(UID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -115,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         user.setStatus(type);
                         user.setUsername(usename);
 
-                        updateUIWithUser(user);
+                        updateUIWithUser(user,sharedUserModel);
 
                     }
                 }else {
@@ -127,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void fetchSessionChildren(User user){
+    public void fetchSessionChildren(User user,SharedUserModel sharedUserModel){
         db.collection("babies")
                 .whereEqualTo("parent", session_user.getUsername()) // Filter by parent's name
                 .get()
@@ -150,11 +165,13 @@ public class MainActivity extends AppCompatActivity {
                                 baby.setAllergies(allergies);
                                 fetchChildren.add(baby);
 
-                                user.setChildren(fetchChildren);
-
-                                updateUIWithUser2(user);
 
                            }
+
+                            user.setChildren(fetchChildren);
+
+                            sharedUserModel.setSharedData(user);
+                            updateUIWithUser2(user);
                         } else {
                             Log.d("Firestore", "No babies found for the parent.");
                         }
@@ -165,10 +182,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUIWithUser2(User user) {
-        RecyclerView myChildren = findViewById(R.id.MyChildrenRecycler);
-        BabyCardAdapter myBabiesAdapter = new BabyCardAdapter(user.getChildren());
-        myChildren.setAdapter(myBabiesAdapter);
-        myChildren.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        RecyclerView child_list = findViewById(R.id.MyChildrenRecycler);
+        BabyCardAdapter babyCardAdapter = new BabyCardAdapter(user.getChildren());
+        child_list.setAdapter(babyCardAdapter);
+        child_list.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         if(sharedUserModel == null){
             sharedUserModel = new ViewModelProvider(this).get(SharedUserModel.class);
@@ -176,11 +193,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUIWithUser(User user) {
+    private void updateUIWithUser(User user, SharedUserModel sharedUserModel) {
 
         session_user = new User();
         session_user.setUsername(user.getUsername());
         session_user.setStatus(user.getStatus());
+        TextView sessionusername = findViewById(R.id.sessionusername);
+        sessionusername.setText(user.getUsername());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);
         NavController navController = navHostFragment.getNavController();
@@ -193,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             sharedUserModel.setSharedData(user);
         }
 
-        fetchSessionChildren(user);
+        fetchSessionChildren(user,sharedUserModel);
 
 
     }

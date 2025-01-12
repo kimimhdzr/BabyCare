@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.babycare.Objects.Baby;
 import com.example.babycare.Objects.Tip;
 import com.example.babycare.Objects.User;
 import com.example.babycare.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -32,15 +35,22 @@ public class Home extends Fragment implements AdapterInt {
 
     private SharedUserModel sharedUserModel;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         ViewPager2 tips_cards = view.findViewById(R.id.tipsViewPager);
         RecyclerView circles = view.findViewById(R.id.circle_recycler);

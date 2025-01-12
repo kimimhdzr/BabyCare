@@ -176,6 +176,9 @@
         <action
             android:id="@+id/nav_to_ManageChildren"
             app:destination="@id/ManageChildren" />
+        <action
+            android:id="@+id/nav_to_EditProfile2"
+            app:destination="@id/EditProfile" />
 
     </fragment>
 
@@ -281,6 +284,9 @@
         <action
             android:id="@+id/nav_to_Setting"
             app:destination="@id/Setting" />
+        <action
+            android:id="@+id/Nav_to_MainProfile2"
+            app:destination="@id/Profile" />
 
     </fragment>
 

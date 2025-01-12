@@ -83,8 +83,6 @@ public class AddChildren extends Fragment {
             allergyAdapter.updateList(allergies);
         });
 
-        profileImageView = view.findViewById(R.id.baby_pfp); // Make sure this exists in your layout XML
-        profileImageView.setOnClickListener(v -> openGallery());
 
         allergy_list.setAdapter(allergyAdapter);
         allergy_list.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
@@ -148,11 +146,6 @@ public class AddChildren extends Fragment {
         return view;
     }
 
-    private void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");  // Only allow image files
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
-    }
 
 
     public boolean checking(){
@@ -200,14 +193,6 @@ public class AddChildren extends Fragment {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();  // Get the image URI
-            profileImageView.setImageURI(imageUri);  // Display the image in the CircleImageView
-        }
-    }
 
     private void uploadImageToFirebase(Uri imageUri, Baby baby, NavController navController) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
