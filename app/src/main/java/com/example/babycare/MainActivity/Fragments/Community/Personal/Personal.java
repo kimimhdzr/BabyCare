@@ -93,8 +93,8 @@ public class Personal extends Fragment {
         Query query2;
         if (true) {
             // First sync: retrieve all chats for the user (without timestamp filter)
-            query1 = db.collection("chats").whereEqualTo("participants.user_1", uid);
-            query2 = db.collection("chats").whereEqualTo("participants.user_2", uid);
+            query1 = db.collection("chats").whereEqualTo("participants.user_1.userId", uid);
+            query2 = db.collection("chats").whereEqualTo("participants.user_2.userId", uid);
         } else {
             // Subsequent syncs: retrieve only chats with updated messages
             query1 = db.collection("chats")

@@ -30,7 +30,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int getItemViewType(int position) {
         MessageModel message = messageList.get(position);
         // Check if the messageModel sender matches the current user role
-        return message.getChatID().equals(uid) ? VIEW_TYPE_OUTGOING : VIEW_TYPE_INCOMING;
+        return message.getSenderID().equals(uid) ? VIEW_TYPE_OUTGOING : VIEW_TYPE_INCOMING;
     }
 
     @Override

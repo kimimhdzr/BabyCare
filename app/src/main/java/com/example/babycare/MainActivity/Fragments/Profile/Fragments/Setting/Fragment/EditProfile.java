@@ -157,18 +157,20 @@ public class EditProfile extends Fragment {
     }
 
     private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");  // Only allow image files
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data.getData() != null) {
             imageUri = data.getData(); // Get the image URI
             profileImg.setImageURI(imageUri); // Set the selected image to the ImageView
             // You can call a method here to upload the image to your server or Firebase
             selectedimage = imageUri;
+            Log.e("Edit Profile", imageUri.toString() );
         }
     }
 

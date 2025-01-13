@@ -34,6 +34,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 
@@ -118,16 +120,16 @@ public class Chat extends Fragment {
             }
         });
 
-
-        // Fetch existing messages from SQLite
-        loadMessagesFromSQLite(chatId);
-
-
-        // Fetch new messages from Firestore
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        messagesCollection = firestore.collection("chats")
-                .document(chatId)
-                .collection("messages");
+//
+//        // Fetch existing messages from SQLite
+//        loadMessagesFromSQLite(chatId);
+//
+//
+//        // Fetch new messages from Firestore
+//        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+//        messagesCollection = firestore.collection("chats")
+//                .document(chatId)
+//                .collection("messages");
         fetchMessagesFromFirestore(chatId);
 
 
@@ -142,67 +144,91 @@ public class Chat extends Fragment {
 
     private void fetchMessagesFromFirestore(String chatId) {
         // Get the latest timestamp from SQLite
-        String latestTimestamp = dbHelper.getLatestTimestampForChat(chatId);
+//        String latestTimestamp = dbHelper.getLatestTimestampForChat(chatId);
 
-        Query query = messagesCollection;
 
-        if (latestTimestamp != null) {
-            try {
-                // Convert ISO 8601 string to Date
-                SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                isoFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Ensure the timezone is consistent
-                Date latestDate = isoFormat.parse(latestTimestamp);
 
-                // Convert Date to Firestore Timestamp
-                Timestamp latestFirestoreTimestamp = new Timestamp(latestDate);
-
-                // Query Firestore for messages after the latest timestamp
-                query = messagesCollection.whereGreaterThan("timestamp", latestFirestoreTimestamp);
-            } catch (ParseException e) {
-                Log.e("Timestamp", "Error parsing timestamp: " + latestTimestamp, e);
-            }
-        } else {
+//        if (latestTimestamp != null) {
+//            try {
+//                // Convert ISO 8601 string to Date
+//                SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+//                isoFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Ensure the timezone is consistent
+//                Date latestDate = isoFormat.parse(latestTimestamp);
+//
+//                // Convert Date to Firestore Timestamp
+//                Timestamp latestFirestoreTimestamp = new Timestamp(latestDate);
+//
+//                // Query Firestore for messages after the latest timestamp
+//                query = messagesCollection.whereGreaterThan("timestamp", latestFirestoreTimestamp);
+//            } catch (ParseException e) {
+//                Log.e("Timestamp", "Error parsing timestamp: " + latestTimestamp, e);
+//            }
+//        } else {
             // If no messages exist in SQLite, fetch all messages
-            query = messagesCollection;
-        }
+//            query = messagesCollection;
+//        }
 
-        query.addSnapshotListener((queryDocumentSnapshots, e) -> {
-            if (e != null) {
-                Log.w("Firestore", "Listen failed.", e);
-                return;
-            }
-            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                List<MessageModel> messagesToInsert = new ArrayList<>();
-                for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                    // Map Firestore document to MessageModel2
-                    String messageId = document.getId();
-                    String message = document.getString("message");
-                    String senderId = document.getString("senderId");
-                    Timestamp timestamp = document.getTimestamp("timestamp");
+//        Query query = messagesCollection;
 
-                    // Format timestamp for storage in SQLite
-                    SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                    String isoFormattedTimestamp = isoFormat.format(timestamp.toDate());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chats") // Access the chats collection
+                .document(chatId) // Specify the document (chat) with the given chat ID
+                .collection("messages") // Access the messages subcollection
+                .orderBy("timestamp", Query.Direction.ASCENDING) // Order messages by timestamp descending
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Process the retrieved messages
+                        List<MessageModel> messagesToInsert = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
 
-                    // Create a MessageModel2 object
-                    MessageModel messageModel = new MessageModel(
-                            messageId,
-                            isoFormattedTimestamp,
-                            senderId,
-                            message,
-                            new ArrayList<>(),
-                            chatId
-                    );
-                    messagesToInsert.add(messageModel);  // Add to list
-                }
-                // Insert all messages into SQL db
 
-                if (!messagesToInsert.isEmpty()) {
-                    messagesAdapter.appendMessages(messagesToInsert);
-                    dbHelper.addMessageList(messagesToInsert);
-                }
-            }
-        });
+                            // Map Firestore document to MessageModel2
+                            String messageId = document.getId();
+                            String message = document.getString("message");
+                            String senderId = document.getString("senderId");
+                            Timestamp timestamp = document.getTimestamp("timestamp");
+
+                            // Format timestamp for storage in SQLite
+                            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                            String isoFormattedTimestamp = isoFormat.format(timestamp.toDate());
+
+                            // Create a MessageModel2 object
+                            MessageModel messageModel = new MessageModel(
+                                    messageId,
+                                    isoFormattedTimestamp,
+                                    senderId,
+                                    message,
+                                    new ArrayList<>(),
+                                    chatId
+                            );
+                            messagesToInsert.add(messageModel);  // Add to list
+
+
+                        }
+                    messagesAdapter.setMessages(messagesToInsert);
+                    } else {
+                        Log.w("RetrieveMessages", "Error getting messages", task.getException());
+                    }
+                });
+
+//        query.addSnapshotListener((queryDocumentSnapshots, e) -> {
+//            if (e != null) {
+//                Log.w("Firestore", "Listen failed.", e);
+//                return;
+//            }
+//            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+//                for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+//
+//                }
+//                // Insert all messages into SQL db
+//
+////                if (!messagesToInsert.isEmpty()) {
+////                    messagesAdapter.appendMessages(messagesToInsert);
+////                    dbHelper.addMessageList(messagesToInsert);
+////                }
+//            }
+//        });
     }
 
     private String formatTimestamp(Date timestamp) {

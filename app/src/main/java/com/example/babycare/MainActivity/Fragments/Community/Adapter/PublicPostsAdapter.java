@@ -1,5 +1,7 @@
 package com.example.babycare.MainActivity.Fragments.Community.Adapter;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,18 +11,23 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.babycare.DataBinding.Model.MessageModel;
+import com.example.babycare.MainActivity.Fragments.Community.Services.NewChat;
 import com.example.babycare.R;
 import com.bumptech.glide.Glide;
 import com.example.babycare.DataBinding.Model.PostModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PublicPostsAdapter extends RecyclerView.Adapter<PublicPostsAdapter.CardViewHolder>  {
 
@@ -86,6 +93,42 @@ public class PublicPostsAdapter extends RecyclerView.Adapter<PublicPostsAdapter.
                 baby_bundle.putSerializable("post",postsList.get(holder.getAdapterPosition()));
                 Navigation.findNavController(view).navigate(R.id.nav_to_Comment,baby_bundle);
             }
+        });
+
+        holder.profile_image.setOnClickListener(view -> {
+            // Create an AlertDialog builder
+            AlertDialog.Builder builder = new AlertDialog.Builder(context); // Use 'getActivity()' if in a Fragment
+            builder.setTitle("Confirmation")
+                    .setMessage("Do you want to message now?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        dialog.dismiss();
+
+                        // Create an instance of NewChat
+                        NewChat newChat = new NewChat();
+                        String chatId = UUID.randomUUID().toString(); // Generate a unique ID for the chat
+
+                        // Call createChat to initiate the chat
+                        newChat.createChat(
+                                context,
+                                chatId,
+                                post.getUserId(),      // ID of the user you want to message
+                                post.getUserName(),    // Username of the recipient
+                                post.getProfilePic(),  // Profile picture URL of the recipient
+                                "Hi, I'd like to connect!", // Initial message content
+                                createdChatId -> {
+                                    // Show a success message
+                                    Snackbar.make(view, "Chat initiated! You can continue the conversation in the Personal section.", Snackbar.LENGTH_LONG).show();
+
+                                });
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // Dismiss the dialog
+                        dialog.dismiss();
+                    });
+
+            // Create and show the AlertDialog
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         });
 
     }
