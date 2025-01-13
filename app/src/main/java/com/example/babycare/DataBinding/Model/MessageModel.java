@@ -1,11 +1,12 @@
 package com.example.babycare.DataBinding.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MessageModel {
+public class MessageModel  {
 
     private String messageID;
     private String chatID;

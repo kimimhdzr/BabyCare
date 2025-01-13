@@ -3,7 +3,7 @@ package com.example.babycare.DataBinding.Model;
 import java.io.Serializable;
 import java.util.List;
 
-public class PostModel  implements Serializable {
+public class CommentModel  implements Serializable {
 
     private String documentID;
     private String description;
@@ -16,10 +16,10 @@ public class PostModel  implements Serializable {
 
     private String timestamp;
 
-    public PostModel() {
+    public CommentModel() {
     }
 
-    public PostModel (
+    public CommentModel (
             String documentID,
             String description,
             List<String> attachments,
@@ -29,7 +29,7 @@ public class PostModel  implements Serializable {
             String userName,
 
             String timestamp
-            ) {
+    ) {
 
         this.documentID = documentID;
         this.description = description;

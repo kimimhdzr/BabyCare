@@ -70,7 +70,7 @@ public class CalendarFragment extends Fragment {
         bottomSheetDrawer = view.findViewById(R.id.bottomSheetDrawer);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetDrawer);
 
-        bottomSheetBehavior.setPeekHeight(950);
+        bottomSheetBehavior.setPeekHeight(650);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         recyclerView = view.findViewById(R.id.RVCalendarList);

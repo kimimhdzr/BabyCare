@@ -156,6 +156,11 @@
             android:id="@+id/nav_to_Chat"
             app:destination="@id/Chat" />
 
+
+        <action
+            android:id="@+id/nav_to_Comment"
+            app:destination="@id/Comment" />
+
     </fragment>
 
 
@@ -335,6 +340,17 @@
     <!--    Profile  End  -->
 
     <!--    Main  End  -->
+
+    <fragment
+        android:id="@+id/Comment"
+        android:name="com.example.babycare.MainActivity.Fragments.Community.Forum.Comment"
+        android:label="Comment"
+        tools:layout="@layout/fragment_comment">
+        <action
+            android:id="@+id/nav_to_Community"
+            app:destination="@id/Community" />
+
+    </fragment>
 
 
 </navigation>

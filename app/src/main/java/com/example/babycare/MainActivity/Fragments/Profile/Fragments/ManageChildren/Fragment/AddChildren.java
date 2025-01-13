@@ -175,7 +175,11 @@ public class AddChildren extends Fragment {
                                 // Successfully added
                                 babyProfile.put("dob", convertTimestampToFormattedString(dobTimestamp));
                                 System.out.println("Baby data added with ID: " + documentReference.getId());
-                                uploadImageToFirebase(documentReference.getId(), imageUri, navController, babyProfile);
+                                if (imageUri != null){
+                                    uploadImageToFirebase(documentReference.getId(), imageUri, navController, babyProfile);
+                                } else {
+                                    dbHelper.addBabyProfile(babyProfile);
+                                }
                             })
                             .addOnFailureListener(e -> {
                                 // Handle failure
