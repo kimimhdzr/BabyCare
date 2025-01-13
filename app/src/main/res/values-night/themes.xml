@@ -22,7 +22,7 @@
         <item name="subtitleTextColor">#80868B</item>
 
 
-        <item name="android:background">#1C1C1C</item>
+<!--        <item name="android:background">#1C1C1C</item>-->
         <item name="backgroundColor">#1C1C1C</item>
         <item name="colorOnBackground">#FFFFFF</item>
 

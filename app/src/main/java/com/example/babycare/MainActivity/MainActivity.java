@@ -20,10 +20,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser != null) {
             String uid = currentUser.getUid();
 
+            String acctype = "";
             db.collection("users")
                     .document(uid)
                     .get()
@@ -116,6 +122,83 @@ public class MainActivity extends AppCompatActivity {
                                             type
                                     );
                                     Log.d(TAG, "Into SQL");
+                                    fetchBabyProfile(type);
+
+                                } else {
+                                    Log.d(TAG, "No such document");
+                                }
+                                Log.e(TAG, "state: " + "success");
+                            } else {
+                                Log.d(TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void fetchBabyProfile(String type) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+
+            String uid = currentUser.getUid();
+
+            String field = "";
+            if ("Father".equals(type)) {
+                field = "parent.fatherId";
+            } else if ("Mother".equals(type)) {
+                field = "parent.motherId";
+            } else if ("Guardian".equals(type)) {
+                field = "parent.guardianId";
+            }
+
+            final String field2 = field;
+
+            Query query;
+            query = db.collection("BabyProfile")
+                    .whereEqualTo(field2, uid);
+
+            query.get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                QuerySnapshot querySnapshot = task.getResult();
+                                if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+
+                                        String documentID = documentSnapshot.getId();
+                                        String name = documentSnapshot.getString("name");
+                                        Timestamp dob = documentSnapshot.getTimestamp("dob");
+                                        String dobFormattedTime = formatTimestamp(dob.toDate());
+                                        String height = documentSnapshot.getString("height");
+                                        String weight = documentSnapshot.getString("weight");
+                                        String bloodType = documentSnapshot.getString("bloodType");
+
+                                        String parent_fatherId = documentSnapshot.getString("parent.fatherId");
+                                        String parent_motherId = documentSnapshot.getString("parent.motherId");
+                                        String parent_guardianId = documentSnapshot.getString("parent.guardianId");
+
+                                        List<String> allergies = (List<String>)  documentSnapshot.get("allergies");
+                                        String profilePic = documentSnapshot.getString("profilePic");
+
+
+                                        // Add a Current User in SQL
+                                        MyDatabaseHelper dbHelper = new MyDatabaseHelper(MainActivity.this, "CurrentUser.db");
+                                        dbHelper.addBabyProfile(
+                                                documentID,
+                                                parent_fatherId,
+                                                parent_motherId,
+                                                parent_guardianId,
+                                                name,
+                                                dobFormattedTime,
+                                                height,
+                                                weight,
+                                                bloodType,
+                                                formatAllergies(allergies),
+                                                profilePic
+                                        );
+                                        Log.d(TAG, "Into SQL"+ name);
+                                    }
 
                                 } else {
                                     Log.d(TAG, "No such document");
@@ -136,5 +219,16 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
         return dateFormat.format(timestamp);
 
+    }
+    public String formatAllergies(List<String> allergiesList) {
+        String allergies ="";
+        if (allergiesList != null && !allergiesList.isEmpty()) {
+            // Convert the ArrayList into a comma-separated string
+            allergies = String.join(", ", allergiesList);
+        } else {
+            // Set to null or empty string if the list is null or empty
+            allergies = "";
+        }
+        return allergies;
     }
 }

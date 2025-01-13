@@ -11,11 +11,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.babycare.DataBinding.Model.ChatModel;
 import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.example.babycare.MainActivity.Fragments.Community.Services.ChatManager;
 import com.example.babycare.R;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
 
@@ -23,7 +25,6 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
 
     private Context context;
     private List<ChatModel> chatList;
-    MyDatabaseHelper dbHelper;
     ChatManager chatManager;
 
     public ChatListAdapter(Context context,
@@ -43,31 +44,28 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         ChatModel chat = chatList.get(position);
+        String userName = (String) chat.getParticipants().get("userName");
+        String profilePic = (String) chat.getParticipants().get("profilePic");
+        String messageContent = (String) chat.getLastMessage().get("messageContent");
+        String timestamp = (String) chat.getLastMessage().get("timestamp");
+        String chatID = chat.getDocumentID();
 
-        userProfile = new CurrentUserSharedPreference(context);
-        String role = userProfile.getRole();
-
-        String name = "";
-        if (role.equals("user")) {
-            name = chat.getCompanyName();
-        } else {
-            name = chat.getUserName();
-        }
-
-        holder.nametxt.setText(name);
-        holder.lastmessagetimestamptxt.setText(chat.getLastMessageTimestamp());
-        holder.lastmessagetxt.setText(chat.getLastMessageContent());
+        holder.nametxt.setText(userName);
+        holder.lastmessagetimestamptxt.setText(timestamp);
+        holder.lastmessagetxt.setText(messageContent);
+        Glide.with(context)
+                .load(profilePic) // Replace with your drawable resource
+                .into(holder.profile_image);
 
         chatManager = ChatManager.getInstance();
-        final String nameinner = name;
         holder.materialCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                chatManager.setChatID(chat.getChatId());
-                chatManager.setChatName(nameinner);
+                chatManager.setChatID(chatID);
+                chatManager.setChatName(profilePic);
 
                 NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.nav_to_Pe);
+                navController.navigate(R.id.nav_to_Chat);
             }
         });
 
@@ -78,10 +76,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
         return chatList.size();
     }
 
-//    public void updateChatList(List<ChatModel> newChatList) {
-//        this.chatList = newChatList;
-//        notifyDataSetChanged(); // Refresh the list
-//    }
+    public void setChatList(List<ChatModel> newChatList) {
+        this.chatList.clear();
+        this.chatList.addAll(newChatList);
+        notifyDataSetChanged(); // Refresh the list
+    }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
 
@@ -89,6 +88,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
         TextView lastmessagetimestamptxt;
         TextView lastmessagetxt;
         MaterialCardView materialCardView;
+        ShapeableImageView profile_image;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +96,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
             lastmessagetimestamptxt = itemView.findViewById(R.id.lastmessagetimestamp);
             lastmessagetxt = itemView.findViewById(R.id.lastmessage);
             materialCardView = itemView.findViewById(R.id.chatMaterialCard);
+            profile_image = itemView.findViewById(R.id.profile_image);
         }
     }
 }

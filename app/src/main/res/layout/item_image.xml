@@ -1,0 +1,40 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
+    android:padding="8dp">
+
+    <!-- ImageView with rounded corners -->
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/colorSurface"
+        android:contentDescription="Selected image"
+        android:elevation="4dp"
+        android:scaleType="centerCrop"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Close button with better visibility -->
+    <ImageButton
+        android:id="@+id/close_icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="6dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/circle_background"
+        android:contentDescription="Remove image"
+        android:elevation="6dp"
+        app:tint="?attr/colorPrimaryVariant"
+        app:layout_constraintEnd_toEndOf="@id/image_view"
+        app:layout_constraintTop_toTopOf="@id/image_view"
+        app:srcCompat="@drawable/baseline_close_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

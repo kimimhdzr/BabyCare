@@ -50,4 +50,47 @@
     <string name="web_client_id">175753056738–2gfb1ucgrp7omp4aa2kikfjsg8fb9gaj.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- User Account and Access -->
+    <string name="question1">How do I create a user account?</string>
+    <string name="detail1">To create a user account, go to the Sign Up page, fill in your details including name, email, and password, and click Submit. You\'ll receive an email to verify your account.</string>
+
+    <string name="question2">How do I log in to the app?</string>
+    <string name="detail2">Enter your registered email and password on the Login screen. If you\'ve forgotten your password, click on \"Forgot Password\" to reset it.</string>
+
+    <string name="question3">What should I do if I forget my password?</string>
+    <string name="detail3">If you forget your password, click on \"Forgot Password\" at the login page, and follow the instructions to reset it using your email.</string>
+
+    <!-- Services -->
+    <string name="question4">How do I rent a waste truck service?</string>
+    <string name="detail4">To rent a waste truck, go to the Services section, select \'Rent a Waste Truck,\' choose the desired date and location, and confirm your booking.</string>
+
+    <string name="question5">How do I schedule garbage pickup?</string>
+    <string name="detail5">Go to the Garbage Schedule section, select your area, and view or schedule a pickup. You can also set reminders for upcoming collection dates.</string>
+
+    <!-- Reporting Issues -->
+    <string name="question6">How do I report a waste management issue?</string>
+    <string name="detail6">To report an issue, go to the \'Report Issues\' section, fill in the details of the issue including location and description, attach any relevant images, and submit the report.</string>
+
+    <!-- Contact and Support -->
+    <string name="question7">How can I contact customer support?</string>
+    <string name="detail7">You can contact customer support through the app by navigating to the Support section, where you can chat with support representatives or send an email.</string>
+
+    <string name="question8">Can I chat with waste service companies?</string>
+    <string name="detail8">Yes, you can chat with service providers via the app by going to the \'My Services\' section and selecting the company you\'ve rented services from.</string>
+
+    <!-- General Information -->
+    <string name="question9">What is the purpose of this app?</string>
+    <string name="detail9">This app is designed to simplify waste management by allowing users to schedule garbage pickups, report issues, rent waste management services, and interact with waste service providers.</string>
+
+    <string name="question10">Is there a way to track my waste pickups?</string>
+    <string name="detail10">Yes, you can track your waste pickups in the \'Garbage Schedule\' section. Here, you can see upcoming scheduled pickups and their status.</string>
+
+    <string name="question11">Can I see ongoing reports from other users?</string>
+    <string name="detail11">Yes, go to the \'Community\' section where you can view public reports and posts shared by other users regarding waste management issues in your area.</string>
+
+    <string name="question12">How can I update my account information?</string>
+    <string name="detail12">To update your account information, navigate to the Profile section in the app, where you can edit details like your email, phone number, and address.</string>
+
 </resources>

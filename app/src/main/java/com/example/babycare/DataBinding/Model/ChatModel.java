@@ -22,13 +22,17 @@ public class ChatModel {
     }
     public ChatModel(
             String documentID,
+
             String lastMessage_senderID,
             String lastMessage_userName,
             String lastMessage_messageId,
+            String lastMessage_messageContent,
             String lastMessage_timestamp,
+
             String participants_userId,
             String participants_userName,
             String participants_profilePic,
+
             String createdAt
     ) {
         this.documentID = documentID;
@@ -36,6 +40,7 @@ public class ChatModel {
         lastMessage.put("senderId", lastMessage_senderID);
         lastMessage.put("userName", lastMessage_userName);
         lastMessage.put("messageId", lastMessage_messageId);
+        lastMessage.put("messageContent", lastMessage_messageContent);
         lastMessage.put("timestamp", lastMessage_timestamp);
 
         participants.put("userId", participants_userId);

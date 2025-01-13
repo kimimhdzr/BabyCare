@@ -1,14 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity.Fragments.Home.Fragments.BabyHome.Fragments.BabyProfile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/blue_backbtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="20dp"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        android:src="@drawable/baseline_arrow_back_ios_24" />
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_margin="20dp"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        android:src="@drawable/edit_icon_blue" />
+
+
+    <RelativeLayout
+        android:id="@+id/pfp_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="35dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/baby_pfp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.corner50"
+            android:background="@drawable/profile_shape"
+            android:elevation="4dp"
+            android:scaleType="centerCrop"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:rotation="-55"
+            android:src="@drawable/crown" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/baby_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pfp_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/interbold"
+        android:text="Baby Kimi"
+        android:textSize="24sp" />
+
+    <RelativeLayout
+        android:id="@+id/age_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/baby_name"
+        android:layout_width="350dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/baby_profile_bg"
+        android:clipToOutline="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Age"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/baby_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/interbold"
+            android:text="1 years, 3 months"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baby_profile_cartoon" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/height_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/age_box"
+        android:layout_width="161dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/baby_profile_bg2"
+        android:clipToOutline="true">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Height"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/baby_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/interbold"
+
+            android:text="69 cm"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baby_profile_cartoon2" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        app:layout_constraintLeft_toRightOf="@id/height_box"
+        app:layout_constraintTop_toBottomOf="@+id/age_box"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/baby_profile_bg2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Weight"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/interbold"
+
+            android:text="69 cm"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/weight_box"
+        app:layout_constraintLeft_toRightOf="@id/height_box"
+        app:layout_constraintTop_toBottomOf="@+id/age_box"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/baby_profile_bg2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Weight"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/baby_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/interbold"
+
+            android:text="69 cm"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/blood_box"
+        app:layout_constraintLeft_toRightOf="@id/height_box"
+        app:layout_constraintTop_toBottomOf="@+id/weight_box"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:background="@drawable/baby_profile_bg2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter_medium"
+            android:text="Blood Type"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/baby_blood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/interbold"
+            android:text="O-"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/height_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/interbold"
+        android:text="Allergies"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allergy_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

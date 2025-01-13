@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity.Fragments.Community.Forum.Comment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/postMaterialCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:backgroundTint="?attr/backgroundColor"
+        android:clickable="true"
+        android:focusable="true"
+        android:stateListAnimator="@animator/card_press_state_animator"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="?attr/colorSurface">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/sender_profile_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile_shape"
+                android:backgroundTint="?attr/colorSurface"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.corner50" />
+
+            <TextView
+                android:id="@+id/sender_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Hakimi Mahadzir"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/sender_profile_image"
+                app:layout_constraintTop_toTopOf="@id/sender_profile_image" />
+
+            <TextView
+                android:id="@+id/sender_postDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Yesterday"
+                android:textAlignment="textEnd"
+                android:textColor="?attr/subtitleTextColor"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@id/sender_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/sender_name" />
+
+            <TextView
+                android:id="@+id/sender_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="kang.ki.mi123@gmail.com"
+                android:textColor="?attr/subtitleTextColor"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/sender_name"
+                app:layout_constraintTop_toBottomOf="@id/sender_name" />
+
+            <TextView
+                android:id="@+id/sender_context"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="Nice try diddy, but gooning fanum tax in 2024 is crazy"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/sender_email"
+                app:layout_constraintTop_toBottomOf="@id/sender_email" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sender_images_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@id/sender_context"
+                app:layout_constraintStart_toStartOf="@id/sender_context"
+                app:layout_constraintTop_toBottomOf="@id/sender_context" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@id/sender_context"
+                app:layout_constraintStart_toEndOf="@id/sender_profile_image"
+                app:layout_constraintTop_toBottomOf="@id/sender_images_recycler_view">
+
+
+                <ImageButton
+                    android:id="@+id/comment_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/baseline_comment_24"
+                    android:backgroundTint="?attr/subtitleTextColor"
+                    android:contentDescription="comment" />
+
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="?attr/subtitleTextColor"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/like_icon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/baseline_thumb_up_24"
+                    android:backgroundTint="?attr/subtitleTextColor"
+                    android:contentDescription="like" />
+
+                <TextView
+                    android:id="@+id/like_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="?attr/subtitleTextColor"
+                    android:textSize="13sp" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sendLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/postMaterialCard">
+
+        <View
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/topview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/backgroundColor" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_image"
+            android:layout_margin="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/profile_shape"
+            android:backgroundTint="?attr/colorPrimary"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.corner50" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/context_edit_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:hint="Thanks for sharing !"
+            android:minHeight="40dp"
+            android:paddingVertical="5dp"
+            android:textAppearance="?attr/textAppearanceBody1"
+            android:textColor="?attr/colorOnBackground"
+            android:textColorHint="?attr/subtitleTextColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profile_image"
+            app:layout_constraintTop_toTopOf="@id/profile_image" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/images_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@id/context_edit_txt"
+            app:layout_constraintStart_toStartOf="@id/context_edit_txt"
+            app:layout_constraintTop_toBottomOf="@id/context_edit_txt" />
+
+        <ImageView
+            android:id="@+id/context_divider"
+            android:layout_width="0dp"
+            android:layout_height="0.8dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/colorPrimaryVariant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/images_recycler_view" />
+
+        <ImageButton
+            android:id="@+id/images_add_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/backgroundColor"
+            android:clickable="true"
+            android:contentDescription="upload files"
+            android:focusable="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="@id/context_divider"
+            app:layout_constraintTop_toBottomOf="@id/context_divider"
+            app:srcCompat="@drawable/baseline_attach_file_24"
+            app:tint="?attr/colorPrimary" />
+
+        <ImageButton
+            android:id="@+id/location_add_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="25dp"
+            android:background="?attr/backgroundColor"
+            android:clickable="true"
+            android:contentDescription="upload files"
+            android:focusable="true"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@id/images_add_icon"
+            app:layout_constraintTop_toTopOf="@id/images_add_icon"
+            app:srcCompat="@drawable/baseline_location_on_24"
+            app:tint="?attr/colorPrimary" />
+
+        <Button
+            android:id="@+id/post_button"
+            android:layout_width="65dp"
+            android:layout_height="40dp"
+            android:alpha="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="0dp"
+            android:text="Post"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/images_add_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/images_add_icon" />
+
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/linearprogressindicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:indeterminateAnimationType="disjoint"
+            app:indicatorColor="?attr/colorSecondaryVariant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/post_button"
+            app:trackColor="?attr/colorTertiary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@+id/sendLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comment_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

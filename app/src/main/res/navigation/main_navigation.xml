@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/Calendar"
-        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.Others.Calendar"
+        android:name="com.example.babycare.MainActivity.Fragments.Home.Fragments.Calendar.CalendarFragment"
         android:label="Calendar"
         tools:layout="@layout/fragment_calendar">
 
@@ -127,6 +127,9 @@
         <action
             android:id="@+id/nav_to_BabyProfile"
             app:destination="@id/BabyProfile" />
+        <action
+            android:id="@+id/nav_to_ManageChildren"
+            app:destination="@id/ManageChildren" />
     </fragment>
 
     <!--    Home Contents End  -->
@@ -148,8 +151,28 @@
             android:id="@+id/nav_to_Profile"
             app:destination="@id/Profile" />
 
+        <!--    Community Contents    -->
+        <action
+            android:id="@+id/nav_to_Chat"
+            app:destination="@id/Chat" />
+
     </fragment>
 
+
+    <!--    Community Contents Start   -->
+    <fragment
+        android:id="@+id/Chat"
+        android:name="com.example.babycare.MainActivity.Fragments.Community.Personal.Chat"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat">
+
+        <action
+            android:id="@+id/nav_to_Community"
+            app:destination="@id/Community" />
+
+    </fragment>
+
+    <!--    Community Contents End    -->
 
     <!--    Community  End  -->
 
@@ -174,6 +197,14 @@
             android:id="@+id/nav_to_ManageChildren"
             app:destination="@id/ManageChildren" />
 
+        <action
+            android:id="@+id/nav_to_Setting"
+            app:destination="@id/Setting" />
+
+        <action
+            android:id="@+id/nav_to_EditProfile"
+            app:destination="@id/EditProfile" />
+
     </fragment>
 
     <!--    Profile  Content Start  -->
@@ -193,6 +224,9 @@
         <action
             android:id="@+id/nav_to_AddChildren"
             app:destination="@id/AddChildren" />
+        <action
+            android:id="@+id/nav_to_EditBabyProfile"
+            app:destination="@id/EditBabyProfile" />
 
     </fragment>
 
@@ -271,6 +305,9 @@
         android:label="EditProfile"
         tools:layout="@layout/fragment_edit_profile">
 
+        <action
+            android:id="@+id/nav_to_Profile"
+            app:destination="@id/Profile" />
         <!--    Setting Content    -->
         <action
             android:id="@+id/nav_to_Setting"

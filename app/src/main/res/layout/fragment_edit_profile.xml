@@ -1,14 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity.Fragments.Profile.Fragments.Setting.Fragment.EditProfile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/profile_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimaryVariant"
+        android:padding="15dp">
+
+        <ImageButton
+            android:id="@+id/close_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/header"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/baseline_arrow_back_ios_24"
+            android:backgroundTint="@color/white"
+            android:contentDescription="close" />
+
+        <TextView
+            android:id="@+id/header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_toolbar"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.corner50"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/profile_shape"
+        android:elevation="4dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/uploadphototxt"
+        app:layout_constraintBottom_toBottomOf="@id/profileImage"
+        app:layout_constraintStart_toEndOf="@id/profileImage"
+        app:layout_constraintTop_toTopOf="@id/profileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="Photo Upload +"
+        android:textColor="?attr/colorPrimaryVariant"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/nameheader"
+            app:layout_constraintStart_toStartOf="@id/profileImage"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.2"
+            android:text="Name"
+            android:textColor="?attr/subtitleTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7.8"
+            android:background="@drawable/edittextoutlineborder"
+            android:backgroundTint="?attr/backgroundColor"
+            android:drawableEnd="@drawable/baseline_person_24"
+            android:drawablePadding="8dp"
+            android:drawableTint="?attr/colorPrimary"
+            android:focusable="true"
+            android:hint="your name"
+            android:inputType="textPersonName"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/emailheader"
+            app:layout_constraintStart_toStartOf="@id/profileImage"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.2"
+            android:text="Email"
+            android:textColor="?attr/subtitleTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7.8"
+            android:background="@drawable/edittextoutlineborder"
+            android:backgroundTint="?attr/colorTertiary"
+            android:drawableEnd="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"
+            android:drawableTint="?attr/colorPrimary"
+            android:enabled="false"
+            android:focusable="false"
+            android:hint="youremail@gmail.com"
+            android:inputType="textEmailAddress"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/phoneheader"
+            app:layout_constraintStart_toStartOf="@id/profileImage"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.2"
+            android:text="Phone"
+            android:textColor="?attr/subtitleTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7.8"
+            android:background="@drawable/edittextoutlineborder"
+            android:backgroundTint="?attr/backgroundColor"
+            android:drawableEnd="@drawable/baseline_call_24"
+            android:drawablePadding="8dp"
+            android:drawableTint="?attr/colorPrimary"
+            android:focusable="true"
+            android:hint="phone number"
+            android:inputType="phone"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/addressheader"
+            app:layout_constraintStart_toStartOf="@id/profileImage"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.2"
+            android:text="Address"
+            android:textColor="?attr/subtitleTextColor"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7.8"
+            android:background="@drawable/edittextoutlineborder"
+            android:backgroundTint="?attr/backgroundColor"
+            android:drawableEnd="@drawable/baseline_location_on_24"
+            android:drawablePadding="8dp"
+            android:drawableTint="?attr/colorPrimary"
+            android:focusable="true"
+            android:hint="your address"
+            android:inputType="textPostalAddress"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/SaveButton"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:focusable="true"
+        android:padding="10dp"
+        android:text="Save"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

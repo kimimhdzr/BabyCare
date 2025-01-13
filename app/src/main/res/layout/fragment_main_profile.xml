@@ -1,14 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity.Fragments.Profile.MainProfile">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile" />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/profile_shape"
+        android:elevation="4dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.corner50" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        android:text="Mommy Lan"
+        android:textColor="?attr/colorOnBackground"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImage" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/manageChildren"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="?attr/backgroundColor"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/icon1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_bedroom_baby_24"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/header1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Manage Children"
+                android:textAlignment="textStart"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/detail1"
+                app:layout_constraintEnd_toStartOf="@id/button1"
+                app:layout_constraintStart_toEndOf="@id/icon1"
+                app:layout_constraintTop_toTopOf="@id/icon1" />
+
+            <TextView
+                android:id="@+id/detail1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Change profile username, number, etc"
+                android:textColor="?attr/subtitleTextColor"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button1"
+                app:layout_constraintStart_toStartOf="@id/header1"
+                app:layout_constraintTop_toBottomOf="@id/header1" />
+
+            <ImageButton
+                android:id="@+id/button1"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:padding="6dp"
+                android:rotation="180"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/header1"
+                app:tint="?attr/colorSecondaryVariant" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        app:cardBackgroundColor="?attr/backgroundColor"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manageChildren">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/icon2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_app_settings_alt_24"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/header2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Settings"
+                android:textAlignment="textStart"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/detail2"
+                app:layout_constraintEnd_toStartOf="@id/button2"
+                app:layout_constraintStart_toEndOf="@id/icon2"
+                app:layout_constraintTop_toTopOf="@id/icon2" />
+
+            <TextView
+                android:id="@+id/detail2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Change profile username, number, etc"
+                android:textColor="?attr/subtitleTextColor"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button2"
+                app:layout_constraintStart_toStartOf="@id/header2"
+                app:layout_constraintTop_toBottomOf="@id/header2" />
+
+            <ImageButton
+                android:id="@+id/button2"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:padding="6dp"
+                android:rotation="180"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/header2"
+                app:tint="?attr/colorSecondaryVariant" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/editProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="2dp"
+        app:cardBackgroundColor="?attr/backgroundColor"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/icon3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_person_24"
+                android:tint="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/header3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Edit Profile"
+                android:textAlignment="textStart"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/detail3"
+                app:layout_constraintEnd_toStartOf="@id/button3"
+                app:layout_constraintStart_toEndOf="@id/icon3"
+                app:layout_constraintTop_toTopOf="@id/icon3" />
+
+            <TextView
+                android:id="@+id/detail3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Change profile username, number, etc"
+                android:textColor="?attr/subtitleTextColor"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button3"
+                app:layout_constraintStart_toStartOf="@id/header3"
+                app:layout_constraintTop_toBottomOf="@id/header3" />
+
+            <ImageButton
+                android:id="@+id/button3"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:padding="6dp"
+                android:rotation="180"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_arrow_back_ios_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/header3"
+                app:tint="?attr/colorSecondaryVariant" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

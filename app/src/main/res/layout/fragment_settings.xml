@@ -1,14 +1,527 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity.Fragments.Profile.Fragments.Setting.Settings">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <!-- Profile picture hovering between the two sections -->
+        <ImageButton
+            android:id="@+id/backbutton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="15dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/baseline_arrow_back_ios_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorOnBackground"/>
+
+        <TextView
+            android:id="@+id/topheader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Settings"
+            android:textAlignment="textStart"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="?attr/colorSecondary"/>
+
+    </LinearLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/generalcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="2dp"
+                app:cardBackgroundColor="?attr/backgroundColor"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/heading1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="General"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/subtitleTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/heading1">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_person_24"
+                            android:tint="?attr/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/header1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Edit Profile"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/detail1"
+                            app:layout_constraintEnd_toStartOf="@id/navtoeditprofile"
+                            app:layout_constraintStart_toEndOf="@id/icon1"
+                            app:layout_constraintTop_toTopOf="@id/icon1" />
+
+                        <TextView
+                            android:id="@+id/detail1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Change profile username, number, etc"
+                            android:textColor="?attr/subtitleTextColor"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/navtoeditprofile"
+                            app:layout_constraintStart_toStartOf="@id/header1"
+                            app:layout_constraintTop_toBottomOf="@id/header1" />
+
+                        <ImageButton
+                            android:id="@+id/navtoeditprofile"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@android:color/transparent"
+                            android:padding="6dp"
+                            android:rotation="180"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_arrow_back_ios_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/header1"
+                            app:tint="?attr/colorSecondaryVariant" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout1">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_lock_24"
+                            android:tint="?attr/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/header2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Change Password"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/detail2"
+                            app:layout_constraintEnd_toStartOf="@id/navtochangepassword"
+                            app:layout_constraintStart_toEndOf="@id/icon2"
+                            app:layout_constraintTop_toTopOf="@id/icon2" />
+
+                        <TextView
+                            android:id="@+id/detail2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Update and strengthen account security"
+                            android:textColor="?attr/subtitleTextColor"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/navtochangepassword"
+                            app:layout_constraintStart_toStartOf="@id/header2"
+                            app:layout_constraintTop_toBottomOf="@id/header2" />
+
+                        <ImageButton
+                            android:id="@+id/navtochangepassword"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@android:color/transparent"
+                            android:padding="6dp"
+                            android:rotation="180"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_arrow_back_ios_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="?attr/colorSecondaryVariant" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout2">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon3"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/removebgapplogo2"
+                            android:tint="?attr/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/header3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="App Information (FAQ)"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/detail3"
+                            app:layout_constraintEnd_toStartOf="@id/navtoappinformation"
+                            app:layout_constraintStart_toEndOf="@id/icon3"
+                            app:layout_constraintTop_toTopOf="@id/icon3" />
+
+                        <TextView
+                            android:id="@+id/detail3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Commonly asked questions"
+                            android:textColor="?attr/subtitleTextColor"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/navtoappinformation"
+                            app:layout_constraintStart_toStartOf="@id/header3"
+                            app:layout_constraintTop_toBottomOf="@id/header3" />
+
+                        <ImageButton
+                            android:id="@+id/navtoappinformation"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@android:color/transparent"
+                            android:padding="6dp"
+                            android:rotation="180"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_arrow_back_ios_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="?attr/colorSecondaryVariant" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/preferencecard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="2dp"
+                app:cardBackgroundColor="?attr/backgroundColor"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/generalcard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/heading2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Preferences"
+                        android:textAlignment="textStart"
+                        android:textColor="?attr/subtitleTextColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/heading2">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon4"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_notifications_24"
+                            android:tint="?attr/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/header4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Notification"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/detail4"
+                            app:layout_constraintEnd_toStartOf="@id/switchnotification"
+                            app:layout_constraintStart_toEndOf="@id/icon4"
+                            app:layout_constraintTop_toTopOf="@id/icon4" />
+
+                        <TextView
+                            android:id="@+id/detail4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Customize your notification preferences"
+                            android:textColor="?attr/subtitleTextColor"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/switchnotification"
+                            app:layout_constraintStart_toStartOf="@id/header4"
+                            app:layout_constraintTop_toBottomOf="@id/header4" />
+
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switchnotification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:thumbTint="?attr/colorSecondaryVariant"
+                            app:trackTint="?attr/colorSecondary" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout4">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon5"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_contact_support_24"
+                            android:tint="?attr/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/header5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Support"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/detail5"
+                            app:layout_constraintEnd_toStartOf="@id/navtosupport"
+                            app:layout_constraintStart_toEndOf="@id/icon5"
+                            app:layout_constraintTop_toTopOf="@id/icon5" />
+
+                        <TextView
+                            android:id="@+id/detail5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Let us know any problems you encounter"
+                            android:textColor="?attr/subtitleTextColor"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/navtosupport"
+                            app:layout_constraintStart_toStartOf="@id/header5"
+                            app:layout_constraintTop_toBottomOf="@id/header5" />
+
+                        <ImageButton
+                            android:id="@+id/navtosupport"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@android:color/transparent"
+                            android:padding="6dp"
+                            android:rotation="180"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_arrow_back_ios_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="?attr/colorSecondaryVariant" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/layout5">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/icon6"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/baseline_logout_24"
+                            android:tint="?attr/colorPrimary"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/header6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="Log Out"
+                            android:textAlignment="textStart"
+                            android:textColor="?attr/colorOnBackground"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/detail6"
+                            app:layout_constraintEnd_toStartOf="@id/navtologout"
+                            app:layout_constraintStart_toEndOf="@id/icon6"
+                            app:layout_constraintTop_toTopOf="@id/icon6" />
+
+                        <TextView
+                            android:id="@+id/detail6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Security log out of account"
+                            android:textColor="?attr/subtitleTextColor"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/navtologout"
+                            app:layout_constraintStart_toStartOf="@id/header6"
+                            app:layout_constraintTop_toBottomOf="@id/header6" />
+
+                        <ImageButton
+                            android:id="@+id/navtologout"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@android:color/transparent"
+                            android:padding="6dp"
+                            android:rotation="180"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/baseline_arrow_back_ios_24"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="?attr/colorSecondaryVariant" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
