@@ -36,7 +36,9 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
 import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
@@ -61,6 +63,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     private EditText email, password;
     private Button loginButton, signupButton;
     private TextView forgotpassTxtView;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,12 +91,14 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.web_client_id))
                 .requestEmail()
+                .requestProfile()
                 .build();
 
         GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .enableAutoManage(getActivity(), this::onConnectionFailed)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
 
         NavController navController = NavHostFragment.findNavController(this);
         signupButton.setOnClickListener(new View.OnClickListener() {

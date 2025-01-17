@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         UID = bundle.getString("session_id");
         sharedUserModel.fetchUserData(UID);
+        fetchSessionUser(sharedUserModel);
         // Initialize profileManager (example, adjust as needed)
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up BottomNavigationView with NavController
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
 
 
 
@@ -200,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
         session_user.setUsername(user.getUsername());
         session_user.setStatus(user.getStatus());
         TextView sessionusername = findViewById(R.id.sessionusername);
+        TextView bigtext = findViewById(R.id.bigtext);
+        bigtext.setText(user.getUsername());
         sessionusername.setText(user.getUsername());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_home);

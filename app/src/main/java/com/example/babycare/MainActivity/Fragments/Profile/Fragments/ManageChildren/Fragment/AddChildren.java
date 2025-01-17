@@ -132,7 +132,6 @@ public class AddChildren extends Fragment {
                             });
 
                     Toast.makeText(getContext(),"Baby Added",Toast.LENGTH_LONG);
-                    uploadImageToFirebase(imageUri, baby, navController);
                     session_user.addChildren(baby);
                     sharedUserModel.setSharedData(session_user);
                     ;
@@ -191,20 +190,6 @@ public class AddChildren extends Fragment {
         } catch (DateTimeParseException e) {
             return false;
         }
-    }
-
-
-    private void uploadImageToFirebase(Uri imageUri, Baby baby, NavController navController) {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference().child("profile_pictures/" + System.currentTimeMillis());
-
-        storageRef.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    String imageUrl = uri.toString();
-                    baby.setImageURI(imageUrl);  // Set the image URL in the Baby object
-                    storeBabyDataInFirestore(baby, navController);
-                }))
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Error uploading image: " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
     private void storeBabyDataInFirestore(Baby baby, NavController navController) {

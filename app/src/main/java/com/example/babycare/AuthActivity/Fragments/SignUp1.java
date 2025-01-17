@@ -55,7 +55,6 @@ import java.util.Locale;
 public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
     final int RC_SIGN_IN = 100;
     GoogleApiClient mGoogleApiClient;
-    Context context;
     public FirebaseAuth mAuth;
     private EditText emailEditText, passwordEditText, confirmPasswordEditText;
     private Button signUpButton;
@@ -73,7 +72,7 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this::onConnectionFailed)
+                .enableAutoManage(getActivity(), this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -103,8 +102,6 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
 
 
         ImageButton googleSignIn = view.findViewById(R.id.google_signup);
-
-
 
         googleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +140,11 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
             return;
         }
 
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.setError("Invalid address");
+            return;
+        }
+
         checkRegisteredEmail(email)
                 .addOnSuccessListener(isRegistered -> {
                     if (isRegistered) {
@@ -178,14 +180,6 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
                     // Handle failure (e.g., network errors)
                     System.err.println("Error checking email: " + e.getMessage());
                 });
-
-
-
-
-
-
-
-
     }
 
     protected void signInwithGoogle(GoogleApiClient mGoogleApiClient){
@@ -250,7 +244,8 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
             if (result.isSuccess()) {
 
                 GoogleSignInAccount acct = result.getSignInAccount();
-                ;
+
+                Log.d("NEWUSER","TEST"+acct.getEmail());
                 checkRegisteredEmail(acct.getEmail())
                         .addOnSuccessListener(isRegistered -> {
                             if (isRegistered) {
@@ -263,7 +258,7 @@ public class SignUp1 extends Fragment implements GoogleApiClient.OnConnectionFai
                             // Handle failure (e.g., network errors)
                             System.err.println("Error checking email: " + e.getMessage());
                         });
-                firebaseAuthWithGoogle(acct);
+
             } else {
                 Toast.makeText(getActivity(),"There was a trouble signing in-Please try again",Toast.LENGTH_SHORT).show();;
             }
