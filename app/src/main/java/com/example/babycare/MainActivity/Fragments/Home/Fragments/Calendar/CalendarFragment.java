@@ -37,6 +37,9 @@ import com.example.babycare.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +86,11 @@ public class CalendarFragment extends Fragment {
         adapter = new CalendarAdapter(calendarItemList);
         recyclerView.setAdapter(adapter);
 
+        // Load calendar events
+        loadCalendarEvents();
+
         adapter.setOnEventClickListener(event -> showEventDetailsDialog(event));
+
 
         setCurrentDate();
 
@@ -113,6 +120,49 @@ public class CalendarFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void loadCalendarEvents() {
+        // Get the current user's UID
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Firestore instance
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Retrieve documents from the Calendar subcollection
+        db.collection("users")
+                .document(currentUserId)
+                .collection("Calendar")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    calendarItemList.clear(); // Clear list to avoid duplication
+
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+
+                        String date = document.getString("date");
+                        String description = document.getString("description");
+                        String endTime = document.getString("endTime");
+                        String startTime = document.getString("startTime");
+                        String title = document.getString("title");
+
+                        CalendarModel calendarModel = new CalendarModel(
+                                title,
+                                description,
+                                startTime,
+                                endTime,
+                                date
+                        );
+
+                        calendarItemList.add(calendarModel);
+                        adapter.addEvent(calendarModel);
+                    }
+
+                    adapter.notifyDataSetChanged(); // Notify adapter of data changes
+                })
+                .addOnFailureListener(e -> {
+                    System.err.println("Error fetching events: " + e.getMessage());
+                });
     }
 
     @Override
@@ -178,6 +228,7 @@ public class CalendarFragment extends Fragment {
                 showErrorDialog("All fields must be filled out, including selecting a date from the calendar.");
             } else {
                 CalendarModel calendarEvent = new CalendarModel(title, description, startTime, endTime, selectedDate);
+                calendarEvent.saveToFirestore();
 
                 // Add the event to the adapter
                 adapter.addEvent(calendarEvent);

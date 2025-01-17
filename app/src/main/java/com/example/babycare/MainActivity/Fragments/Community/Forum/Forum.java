@@ -97,12 +97,15 @@ public class Forum extends Fragment {
         Cursor cursor = dbHelper.getCurrentUserByDocumentID(uid);
         String currentUsername = "";
         String currentProfilePicURL = "";
+        String email = "";
         if (cursor != null && cursor.moveToFirst()) {
             currentUsername = cursor.getString(cursor.getColumnIndexOrThrow("username"));
             currentProfilePicURL = cursor.getString(cursor.getColumnIndexOrThrow("profilePic"));
+            email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
         }
         final String final_currentUsername = currentUsername;
         final String final_currentProfilePicURL = currentProfilePicURL;
+        final String final_email = email;
 
 
 
@@ -198,7 +201,7 @@ public class Forum extends Fragment {
                                 imagesGridAdapter.clearData();
                                 selectimageUrls.clear();
                                 if (isSuccess) {
-                                    attachNewPost(documentID, description, uploadimageUrls, uid, final_currentProfilePicURL, final_currentUsername);
+                                    attachNewPost(documentID, description, uploadimageUrls, uid, final_currentProfilePicURL, final_currentUsername, final_email);
                                     Log.e("Posts", "Post created successfully!");
                                 } else {
                                     Log.e("Posts", "Failed to create post.");
@@ -246,7 +249,8 @@ public class Forum extends Fragment {
             List<String> uploadimageUrls,
             String userId,
             String profilePic,
-            String userName
+            String userName,
+            String email
     ) {
         String formattedtime = formatTimestamp(new Date());
         PostModel newpost = new PostModel(
@@ -257,6 +261,7 @@ public class Forum extends Fragment {
                 userId,
                 profilePic,
                 userName,
+                email,
 
                 formattedtime
         );

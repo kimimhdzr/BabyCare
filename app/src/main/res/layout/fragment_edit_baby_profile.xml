@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/interbold"
-                android:text="Add Baby Profile"
+                android:text="Edit Baby Profile"
 
                 android:textAlignment="center"
                 android:textSize="26sp" />

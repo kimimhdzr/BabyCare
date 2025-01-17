@@ -57,7 +57,7 @@ public class PublicPostsAdapter extends RecyclerView.Adapter<PublicPostsAdapter.
         Log.e("PostsAdapter", "Binding post: " + post.getDescription());  // Add this log
 
         holder.name_txt.setText(post.getUserName());
-        holder.email_txt.setText("");
+        holder.email_txt.setText(post.getEmail());
         holder.context_txt.setText(post.getDescription());
         holder.timestamp_txt.setText(post.getTimestamp());
 

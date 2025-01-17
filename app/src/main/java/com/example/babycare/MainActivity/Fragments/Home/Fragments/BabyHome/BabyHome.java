@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.babycare.DataBinding.Model.BabyProfileModel;
 import com.example.babycare.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -23,6 +25,7 @@ import java.util.Date;
 public class BabyHome extends Fragment {
 
     BabyProfileModel session_baby;
+    ShapeableImageView profileImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +68,11 @@ public class BabyHome extends Fragment {
 
         TextView babyname_display = view.findViewById(R.id.baby_name);
         babyname_display.setText(session_baby.getName());
+
+        profileImage = view.findViewById(R.id.profileImage);
+        Glide.with(getContext())
+                .load(session_baby.getProfilePic()) // Replace with your drawable resource
+                .into(profileImage);
 
         TextView babyage_display = view.findViewById(R.id.baby_age);
         if (session_baby.getYears()==0){

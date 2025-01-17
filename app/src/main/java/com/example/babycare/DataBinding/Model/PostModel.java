@@ -14,6 +14,16 @@ public class PostModel  implements Serializable {
     private String profilePic;
     private String userName;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
+
     private String timestamp;
 
     public PostModel() {
@@ -27,6 +37,7 @@ public class PostModel  implements Serializable {
             String userId,
             String profilePic,
             String userName,
+            String email,
 
             String timestamp
             ) {
@@ -38,6 +49,7 @@ public class PostModel  implements Serializable {
         this.userId = userId;
         this.profilePic = profilePic;
         this.userName = userName;
+        this.email = email;
 
         this.timestamp = timestamp;
 

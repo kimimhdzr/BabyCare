@@ -217,16 +217,16 @@ public class EditProfile extends Fragment {
         Map<String, Object> updatedData = new HashMap<>();
 
         if (!TextUtils.isEmpty(name)) {
-            updatedData.put("name", name);
+            updatedData.put("username", name);
         }
         if (!TextUtils.isEmpty(email)) {
             updatedData.put("email", email);
         }
         if (!TextUtils.isEmpty(phone)) {
-            updatedData.put("phone_num", phone);
+            updatedData.put("phoneNumber", phone);
         }
         if (imageUrl != null) {
-            updatedData.put("profile_pic", imageUrl);
+            updatedData.put("profilePic", imageUrl);
         }
 
         // Update user document in Firestore

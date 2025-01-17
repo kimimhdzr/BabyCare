@@ -7,6 +7,8 @@
     <string name="previous">Previous</string>
     <string name="underlined_text"><u>Create new account</u></string>
 
+    <string name="google_client_id">175753056738–2gfb1ucgrp7omp4aa2kikfjsg8fb9gaj.apps.googleusercontent.com</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus

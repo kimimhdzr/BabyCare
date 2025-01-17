@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                                                 formatAllergies(allergies),
                                                 profilePic
                                         );
-                                        Log.d(TAG, "Into SQL"+ name);
+                                        Log.d(TAG, "Into SQL"+ name + profilePic);
                                     }
 
                                 } else {

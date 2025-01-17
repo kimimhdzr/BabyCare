@@ -40,7 +40,7 @@ public class SignUp2 extends Fragment {
     private FirebaseFirestore db;
     private EditText usernameEditText;
     private Button backButton, signUpButton;
-    private String input_email, input_pass, parent_status;
+    private String input_email, input_pass, parent_status, UID;
     private Spinner parent_status_spin;
 
     public SignUp2() {
@@ -60,6 +60,7 @@ public class SignUp2 extends Fragment {
         if (getArguments() != null) {
             input_email = getArguments().getString("input_email");
             input_pass = getArguments().getString("input_password");
+            UID = getArguments().getString("UID");
             // Use the value as needed
         }
 
@@ -99,10 +100,48 @@ public class SignUp2 extends Fragment {
 
         signUpButton = view.findViewById(R.id.sign_up);
         usernameEditText = view.findViewById(R.id.username);
-        signUpButton.setOnClickListener(v -> signUp());
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(input_pass == null || input_email == null){
+                    registerToDB();
+                }
+                else{
+                    signUp();
+                }
 
+
+            }
+        });
 
         return view;
+    }
+    public void registerToDB(){
+
+        String username = usernameEditText.getText().toString().trim();
+
+        Map<String, Object> userProfile = new HashMap<>();
+        userProfile.put("username", username);
+        userProfile.put("profilePic", "");
+        userProfile.put("phoneNumber", "");
+        userProfile.put("createdAt", FieldValue.serverTimestamp());
+        userProfile.put("type", parent_status);
+
+        db.collection("users")
+                .document(UID)
+                .set(userProfile)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(getContext(), "Sign Up Successful", Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("session_id",UID);
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    getActivity().finish();
+
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to save user info", Toast.LENGTH_SHORT).show();
+                });
     }
 
     public void signUp(){
@@ -122,6 +161,7 @@ public class SignUp2 extends Fragment {
                         userProfile.put("username", username);
                         userProfile.put("profilePic", "");
                         userProfile.put("phoneNumber", "");
+                        userProfile.put("email", input_email);
                         userProfile.put("createdAt", FieldValue.serverTimestamp());
                         userProfile.put("type", parent_status);
 

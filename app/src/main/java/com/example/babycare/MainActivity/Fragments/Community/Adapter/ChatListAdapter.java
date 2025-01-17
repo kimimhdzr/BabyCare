@@ -62,7 +62,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.CardVi
             @Override
             public void onClick(View view) {
                 chatManager.setChatID(chatID);
-                chatManager.setChatName(profilePic);
+                chatManager.setChatName(userName);
 
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.nav_to_Chat);

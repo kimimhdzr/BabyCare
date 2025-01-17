@@ -53,7 +53,7 @@ public class Chat extends Fragment {
     ImageButton close_icon;
     CollectionReference messagesCollection;  // Declare this here
     RecyclerView recyclerView;
-    MessagesAdapter messagesAdapter;
+    public MessagesAdapter messagesAdapter;
     TextView headerTxtView;
     ChatManager chatManager;
     ImageButton button_send;
@@ -82,7 +82,8 @@ public class Chat extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_messages);
         messagesAdapter = new MessagesAdapter(
                 messageList,
-                uid
+                uid,
+                recyclerView
         );
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -95,7 +96,6 @@ public class Chat extends Fragment {
             @Override
             public void onClick(View v) {
                 String input_text = message_edit_txt.getText().toString();
-                String messageType = "text";
                 if (TextUtils.isEmpty(input_text)) {
                     message_edit_txt.setError("Empty");
                     return;
@@ -120,55 +120,13 @@ public class Chat extends Fragment {
             }
         });
 
-//
-//        // Fetch existing messages from SQLite
-//        loadMessagesFromSQLite(chatId);
-//
-//
-//        // Fetch new messages from Firestore
-//        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-//        messagesCollection = firestore.collection("chats")
-//                .document(chatId)
-//                .collection("messages");
-        fetchMessagesFromFirestore(chatId);
+        fetchMessagesFromFirestore2(chatId);
 
 
         return view;
     }
-    private void loadMessagesFromSQLite(String chatId) {
-        List<MessageModel> messagesFromSQLite = dbHelper.getAllMessagesForChat(chatId);
-        if (!messagesFromSQLite.isEmpty()) {
-            messagesAdapter.appendMessages(messagesFromSQLite);
-        }
-    }
 
-    private void fetchMessagesFromFirestore(String chatId) {
-        // Get the latest timestamp from SQLite
-//        String latestTimestamp = dbHelper.getLatestTimestampForChat(chatId);
-
-
-
-//        if (latestTimestamp != null) {
-//            try {
-//                // Convert ISO 8601 string to Date
-//                SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-//                isoFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Ensure the timezone is consistent
-//                Date latestDate = isoFormat.parse(latestTimestamp);
-//
-//                // Convert Date to Firestore Timestamp
-//                Timestamp latestFirestoreTimestamp = new Timestamp(latestDate);
-//
-//                // Query Firestore for messages after the latest timestamp
-//                query = messagesCollection.whereGreaterThan("timestamp", latestFirestoreTimestamp);
-//            } catch (ParseException e) {
-//                Log.e("Timestamp", "Error parsing timestamp: " + latestTimestamp, e);
-//            }
-//        } else {
-            // If no messages exist in SQLite, fetch all messages
-//            query = messagesCollection;
-//        }
-
-//        Query query = messagesCollection;
+    private void fetchMessagesFromFirestore1(String chatId) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("chats") // Access the chats collection
@@ -182,29 +140,23 @@ public class Chat extends Fragment {
                         List<MessageModel> messagesToInsert = new ArrayList<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
 
-
                             // Map Firestore document to MessageModel2
                             String messageId = document.getId();
                             String message = document.getString("message");
                             String senderId = document.getString("senderId");
                             Timestamp timestamp = document.getTimestamp("timestamp");
-
-                            // Format timestamp for storage in SQLite
-                            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                            String isoFormattedTimestamp = isoFormat.format(timestamp.toDate());
+                            String readabletimestamp = formatTimestamp(timestamp.toDate());
 
                             // Create a MessageModel2 object
                             MessageModel messageModel = new MessageModel(
                                     messageId,
-                                    isoFormattedTimestamp,
+                                    readabletimestamp,
                                     senderId,
                                     message,
                                     new ArrayList<>(),
                                     chatId
                             );
                             messagesToInsert.add(messageModel);  // Add to list
-
-
                         }
                     messagesAdapter.setMessages(messagesToInsert);
                     } else {
@@ -212,23 +164,52 @@ public class Chat extends Fragment {
                     }
                 });
 
-//        query.addSnapshotListener((queryDocumentSnapshots, e) -> {
-//            if (e != null) {
-//                Log.w("Firestore", "Listen failed.", e);
-//                return;
-//            }
-//            if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-//                for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-//
-//                }
-//                // Insert all messages into SQL db
-//
-////                if (!messagesToInsert.isEmpty()) {
-////                    messagesAdapter.appendMessages(messagesToInsert);
-////                    dbHelper.addMessageList(messagesToInsert);
-////                }
-//            }
-//        });
+    }
+
+    private void fetchMessagesFromFirestore2(String chatId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Add a real-time listener
+        db.collection("chats")
+                .document(chatId)
+                .collection("messages")
+                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.w("RetrieveMessages", "Listen failed", error);
+                        return;
+                    }
+
+                    if (value != null) {
+                        List<MessageModel> messagesToInsert = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : value) {
+                            String messageId = document.getId();
+                            String message = document.getString("message");
+                            String senderId = document.getString("senderId");
+                            Timestamp timestamp = document.getTimestamp("timestamp");
+                            String readableTimestamp = "";
+                            if (timestamp != null) {
+                                readableTimestamp = formatTimestamp(timestamp.toDate());
+                            } else {
+                                Log.w("Firestore", "Timestamp is null for document: " + document.getId());
+                                readableTimestamp = "N/A"; // or provide a default value
+                            }
+                            // Map Firestore document to MessageModel
+                            MessageModel messageModel = new MessageModel(
+                                    messageId,
+                                    readableTimestamp,
+                                    senderId,
+                                    message,
+                                    new ArrayList<>(),
+                                    chatId
+                            );
+                            messagesToInsert.add(messageModel);
+                        }
+
+                        // Update the RecyclerView adapter with new messages
+                        messagesAdapter.setMessages(messagesToInsert);
+                    }
+                });
     }
 
     private String formatTimestamp(Date timestamp) {

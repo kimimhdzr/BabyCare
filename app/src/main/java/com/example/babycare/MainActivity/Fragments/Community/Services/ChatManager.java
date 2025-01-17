@@ -1,8 +1,16 @@
 package com.example.babycare.MainActivity.Fragments.Community.Services;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.babycare.R;
+import com.example.babycare.DataBinding.Model.MessageModel;
 import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
+import com.example.babycare.MainActivity.Fragments.Community.Personal.Chat;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -65,27 +73,48 @@ public class ChatManager {
                 .document(messageId)
                 .set(message)
                 .addOnSuccessListener(aVoid -> {
-                    // MessageModel saved successfully
-//                    updateChat(chatID, messageId, content, dbHelper.getRole());
+                    // Message successfully saved to Firestore
+
+                    // Add the new message to the adapter instantly
+                    MessageModel newMessage = new MessageModel(
+                            messageId,
+                            "Just now", // Use a placeholder for timestamp until Firestore updates
+                            uid,
+                            content,
+                            new ArrayList<>(),
+                            chatID
+                    );
+
+                    // Notify the adapter about the new message
+                    if (context instanceof FragmentActivity) {
+                        FragmentActivity activity = (FragmentActivity) context;
+                        activity.runOnUiThread(() -> {
+                            NavHostFragment navHostFragment = (NavHostFragment) activity
+                                    .getSupportFragmentManager()
+                                    .findFragmentById(R.id.nav_host_fragment_home);
+
+                            if (navHostFragment != null) {
+                                // Get the current fragment from the NavController
+                                Fragment currentFragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+
+                                // Check if the current fragment is the Chat fragment
+                                if (currentFragment instanceof Chat) {
+                                    Chat chatFragment = (Chat) currentFragment;
+
+                                    // Update the messagesAdapter
+                                    if (chatFragment.messagesAdapter != null) {
+                                        chatFragment.messagesAdapter.addMessage(newMessage); // Custom method to add a single message
+                                    }
+                                } else {
+                                    Log.w("ChatManager", "Current fragment is not the Chat fragment.");
+                                }
+                            }
+                        });
+                    }
+
                 }).addOnFailureListener(e -> {
                     // Handle error
                 });
     }
 
-//    private void updateChat(String chatId, String messageId, String content, String senderId) {
-//        Map<String, Object> chatUpdate = new HashMap<>();
-//        chatUpdate.put("last_message.message_id", messageId);
-//        chatUpdate.put("last_message.content", content);
-//        chatUpdate.put("last_message.timestamp", FieldValue.serverTimestamp());
-//        chatUpdate.put("last_message.sender", senderId);
-//        // Update the chat document
-//        db.collection("chats")
-//                .document(chatId)
-//                .update(chatUpdate)
-//                .addOnSuccessListener(aVoid -> {
-//                    // Chat updated successfully
-//                }).addOnFailureListener(e -> {
-//                    // Handle error
-//                });
-//    }
 }

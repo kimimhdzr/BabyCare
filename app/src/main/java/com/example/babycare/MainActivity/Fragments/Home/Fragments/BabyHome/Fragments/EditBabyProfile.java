@@ -1,9 +1,13 @@
 package com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.Fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.shapes.Shape;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,17 +19,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.babycare.DataBinding.Model.BabyProfileModel;
 import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.example.babycare.MainActivity.Fragments.Home.Fragments.BabyHome.Adapter.EditAllergyAdapter;
 import com.example.babycare.MainActivity.MainActivity;
 import com.example.babycare.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,230 +42,227 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class EditBabyProfile extends Fragment {
-    FirebaseAuth mAuth;
-    FirebaseFirestore db;
-    MyDatabaseHelper dbHelper;
-    BabyProfileModel session_baby;
-    EditAllergyAdapter allergyAdapter;
-    ArrayList<String> allergies;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private MyDatabaseHelper dbHelper;
+    private BabyProfileModel session_baby;
+    private EditAllergyAdapter allergyAdapter;
+    private ArrayList<String> allergies;
+    ShapeableImageView add_baby_pfp;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri imageUri;
+    public Uri selectedimage;
+
+    private EditText babyName, babyBirthday, babyHeight, babyWeight, babyBlood;
+    private RecyclerView allergyList;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_baby_profile, container, false);
 
+        // Initialize Firebase and database helper
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-
         dbHelper = new MyDatabaseHelper(getContext(), "CurrentUser.db");
 
+        // Retrieve session data
         Bundle bundle = getArguments();
         session_baby = (BabyProfileModel) bundle.getSerializable("session_baby");
         allergies = session_baby.getAllergies();
 
-        EditText baby_name = view.findViewById(R.id.inputname);
-        baby_name.setText(session_baby.getName());
+        // Initialize views
+        babyName = view.findViewById(R.id.inputname);
+        babyBirthday = view.findViewById(R.id.inputbirthday);
+        babyHeight = view.findViewById(R.id.inputheight);
+        babyWeight = view.findViewById(R.id.inputweight);
+        babyBlood = view.findViewById(R.id.inputblood);
+        allergyList = view.findViewById(R.id.allergy_list2);
+        add_baby_pfp = view.findViewById(R.id.add_baby_pfp);
 
-        EditText baby_birthday = view.findViewById(R.id.inputbirthday);
-        baby_birthday.setText(session_baby.getDob());
+        // Set initial values
+        setInitialValues();
 
-        EditText baby_height = view.findViewById(R.id.inputheight);
-        baby_height.setText(String.valueOf(session_baby.getHeight()));
+        // Setup allergy adapter
+        setupAllergyList();
 
-        EditText baby_weight = view.findViewById(R.id.inputweight);
-        baby_weight.setText(String.valueOf(session_baby.getWeight()));
-
-        EditText baby_blood = view.findViewById(R.id.inputblood);
-        baby_blood.setText(session_baby.getBloodType());
-
-        RecyclerView allergy_list = view.findViewById(R.id.allergy_list2);
-
-
-        allergyAdapter = new EditAllergyAdapter(allergies,position -> {
-            // Handle delete action
-            session_baby.removeAllergy(position);
-            allergyAdapter.updateList(session_baby.getAllergies());
-        });
-        allergy_list.setAdapter(allergyAdapter);
-        allergy_list.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-
-        Button add_allergy = view.findViewById(R.id.add_allergy);
-        add_allergy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view1) {
-                // Use findViewById directly since Button and EditText are in the same layout
-                EditText allergy_input = view.findViewById(R.id.new_allergy); // Directly use the activity's context
-                String new_allergy = allergy_input.getText().toString();
-                if(!new_allergy.isEmpty()){
-                    session_baby.addAllergy(new_allergy);
-                    allergyAdapter.updateList(session_baby.getAllergies());
-                    allergy_input.setText("");
-                }
-
-            }
-        });
-
-        Button save = view.findViewById(R.id.save_btn);
-        save.setOnClickListener(new View.OnClickListener() {
+        add_baby_pfp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newName = baby_name.getText().toString();
-                String newBirthday = baby_birthday.getText().toString();
-                String newHeight = baby_height.getText().toString();
-                String newWeight = baby_weight.getText().toString();
-                String newBlood = baby_blood.getText().toString();
-
-                if(checking()){
-                    db.collection("BabyProfile")
-                            .document(session_baby.getDocumentID())
-                            .get()
-                            .addOnCompleteListener(task -> {
-                                if (task.isSuccessful()) {
-                                    // Check if the document with that name exists
-                                    DocumentSnapshot documentSnapshot = task.getResult();
-                                    if (documentSnapshot.exists()) {
-                                        // We assume only one document will match, but adjust as necessary
-                                        // Fetch current values from Firestore (old values)
-                                        String documentID = documentSnapshot.getId();
-                                        String oldName = documentSnapshot.getString("name");
-                                        Timestamp oldBirthdayTimestamp = documentSnapshot.getTimestamp("dob");
-                                        String oldBirthdayFormatted = convertTimestampToFormattedString(oldBirthdayTimestamp);
-                                        String oldHeight = documentSnapshot.getString("height");
-                                        String oldWeight = documentSnapshot.getString("weight");
-                                        String oldbloodType = documentSnapshot.getString("bloodType");
-
-                                        String parent_fatherId = documentSnapshot.getString("parent.fatherId");
-                                        String parent_motherId = documentSnapshot.getString("parent.motherId");
-                                        String parent_guardianId = documentSnapshot.getString("parent.guardianId");
-
-                                        List<String> oldAllergies = (List<String>) documentSnapshot.get("allergies");
-                                        String profilePic = documentSnapshot.getString("profilePic");
-
-
-
-                                        // Check if the new values are different and update Firestore if needed
-                                        if (!oldName.equals(newName)) {
-                                            db.collection("BabyProfile")
-                                                    .document(documentSnapshot.getId())
-                                                    .update("name", newName);
-                                            session_baby.setName(newName);
-                                        }
-
-                                        if (!oldBirthdayFormatted.equals(baby_birthday)) {
-                                            db.collection("BabyProfile")
-                                                    .document(documentSnapshot.getId())
-                                                    .update("dob", convertFormattedStringToTimestamp(newBirthday));
-                                            session_baby.setDob(newBirthday);
-                                        }
-
-                                        if (!oldHeight.equals(newHeight)) {
-                                            db.collection("BabyProfile")
-                                                    .document(documentSnapshot.getId())
-                                                    .update("height", newHeight);
-                                            session_baby.setHeight(newHeight);
-                                        }
-
-                                        if (!oldWeight.equals(newWeight)) {
-                                            db.collection("BabyProfile")
-                                                    .document(documentSnapshot.getId())
-                                                    .update("weight", newWeight);
-                                            session_baby.setWeight(newWeight);
-                                        }
-
-                                        if (!oldbloodType.equals(newBlood)) {
-                                            db.collection("BabyProfile")
-                                                    .document(documentSnapshot.getId())
-                                                    .update("bloodType", newBlood);
-                                            session_baby.setBloodType(newBlood);
-                                        }
-
-                                        // Handle allergies updates (assuming allergies are in a list)
-                                        ArrayList<String> currentAllergies = allergyAdapter.getAllergies();
-
-                                        if (oldAllergies != null && !oldAllergies.equals(currentAllergies)) {
-                                            db.collection("BabyProfile")
-                                                    .document(documentSnapshot.getId())
-                                                    .update("allergies", currentAllergies);
-                                            session_baby.setAllergies(currentAllergies);
-                                        }
-
-                                        dbHelper.updateBabyProfile(
-                                                documentID,
-                                                parent_fatherId,
-                                                parent_motherId,
-                                                parent_guardianId,
-                                                newName,
-                                                newBirthday,
-                                                newHeight,
-                                                newWeight,
-                                                newBlood,
-                                                formatAllergies(currentAllergies),
-                                                profilePic
-                                        );
-
-                                    } else {
-                                        // Handle case where the document with the name doesn't exist
-                                        Log.d("Firestore", "No document found with the specified name");
-                                    }
-                                } else {
-                                    // Handle any errors in the query
-                                    Log.w("Firestore", "Error getting document.", task.getException());
-                                }
-                            });
-                    Toast.makeText(getContext(),"Changes successful",Toast.LENGTH_LONG).show();
-
-                }
-
-
+                openImagePicker();
             }
         });
+
+        // Add allergy button
+        view.findViewById(R.id.add_allergy).setOnClickListener(v -> addAllergy(view));
+
+        // Save button
+        view.findViewById(R.id.save_btn).setOnClickListener(v -> saveChanges());
 
         return view;
     }
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");  // Only allow image files
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data.getData() != null) {
+            imageUri = data.getData(); // Get the image URI
+            add_baby_pfp.setImageURI(imageUri); // Set the selected image to the ImageView
+            // You can call a method here to upload the image to your server or Firebase
+            selectedimage = imageUri;
+            Log.e("Edit Profile", imageUri.toString() );
+        }
+    }
 
-    public boolean checking(){
-        EditText baby_name = getActivity().findViewById(R.id.inputname);
-        EditText baby_birthday = getActivity().findViewById(R.id.inputbirthday);
-        EditText baby_height = getActivity().findViewById(R.id.inputheight);
-        EditText baby_weight = getActivity().findViewById(R.id.inputweight);
-        EditText baby_blood = getActivity().findViewById(R.id.inputblood);
+    private void setInitialValues() {
+        babyName.setText(session_baby.getName());
+        babyBirthday.setText(session_baby.getDob());
+        babyHeight.setText(String.valueOf(session_baby.getHeight()));
+        babyWeight.setText(String.valueOf(session_baby.getWeight()));
+        babyBlood.setText(session_baby.getBloodType());
+        Glide.with(getContext())
+                .load(session_baby.getProfilePic()) // Replace with your drawable resource
+                .into(add_baby_pfp);
+    }
 
-        if(baby_name.getText().toString().isEmpty()){
-            baby_name.setError("Please enter a name");
-            return false;
-        }
-        if(baby_birthday.getText().toString().isEmpty()){
-            baby_birthday.setError("Please enter a birthday");
-        }
-        if(baby_height.getText().toString().isEmpty()){
-            baby_height.setError("Please enter a height");
-        }
-        if(baby_weight.getText().toString().isEmpty()){
-            baby_weight.setError("Please enter a weight");
-            return false;
-        }
-        if(baby_blood.getText().toString().isEmpty()){
-            baby_blood.setError("Please enter a blood type");
-            return false;
-        }
+    private void setupAllergyList() {
+        allergyAdapter = new EditAllergyAdapter(allergies, position -> {
+            session_baby.removeAllergy(position);
+            allergyAdapter.updateList(session_baby.getAllergies());
+        });
+        allergyList.setAdapter(allergyAdapter);
+        allergyList.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
 
-        if(!isValidDateFormat(baby_birthday.getText().toString())){
-            baby_birthday.setError("Please enter a valid date");
-            return false;
+    private void addAllergy(View view) {
+        EditText allergyInput = view.findViewById(R.id.new_allergy);
+        String newAllergy = allergyInput.getText().toString().trim();
+        if (!newAllergy.isEmpty()) {
+            session_baby.addAllergy(newAllergy);
+            allergyAdapter.updateList(session_baby.getAllergies());
+            allergyInput.setText("");
         }
+    }
 
-        return true;
+//    private void uploadImageToFirebase(String babyID, Uri imageUri, NavController navController, Map<String, Object> babyProfile) {
+//        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+//        StorageReference storageReference = firebaseStorage.getReference();
+//        StorageReference storageRef = storageReference.child("images/babyprofile/" + babyID + ".jpg");
+//
+//        storageRef.putFile(imageUri)
+//                .addOnSuccessListener(taskSnapshot -> storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+//                    String imageUrl = uri.toString();
+//                }))
+//                .addOnFailureListener(e -> {
+//                    // Log the error to the console
+//                    Log.e("FirebaseUpload", "Error uploading image for babyID: " + babyID, e);
+//                    dbHelper.addBabyProfile(babyProfile);
+//                });
+//    }
 
+    private void saveChanges() {
+        if (!validateInputs()) return;
+
+        String newName = babyName.getText().toString();
+        String newBirthday = babyBirthday.getText().toString();
+        String newHeight = babyHeight.getText().toString();
+        String newWeight = babyWeight.getText().toString();
+        String newBlood = babyBlood.getText().toString();
+        ArrayList<String> currentAllergies = allergyAdapter.getAllergies();
+//        uploadImageToFirebase();
+
+        db.collection("BabyProfile")
+                .document(session_baby.getDocumentID())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Map<String, Object> updates = new HashMap<>();
+
+                        updateFieldIfChanged(updates, "name", documentSnapshot.getString("name"), newName, val -> session_baby.setName(val));
+                        updateFieldIfChanged(updates, "dob", convertTimestampToFormattedString(documentSnapshot.getTimestamp("dob")), newBirthday, val -> session_baby.setDob(val));
+                        updateFieldIfChanged(updates, "height", documentSnapshot.getString("height"), newHeight, val -> session_baby.setHeight(val));
+                        updateFieldIfChanged(updates, "weight", documentSnapshot.getString("weight"), newWeight, val -> session_baby.setWeight(val));
+                        updateFieldIfChanged(updates, "bloodType", documentSnapshot.getString("bloodType"), newBlood, val -> session_baby.setBloodType(val));
+
+                        if (!currentAllergies.equals(documentSnapshot.get("allergies"))) {
+                            updates.put("allergies", currentAllergies);
+                            session_baby.setAllergies(currentAllergies);
+                        }
+
+                        // Apply updates in a single batch
+                        if (!updates.isEmpty()) {
+                            db.collection("BabyProfile")
+                                    .document(session_baby.getDocumentID())
+                                    .update(updates)
+                                    .addOnSuccessListener(aVoid -> {
+                                        dbHelper.updateBabyProfile(
+                                                session_baby.getDocumentID(),
+                                                documentSnapshot.getString("parent.fatherId"),
+                                                documentSnapshot.getString("parent.motherId"),
+                                                documentSnapshot.getString("parent.guardianId"),
+                                                newName, newBirthday, newHeight, newWeight, newBlood,
+                                                formatAllergies(currentAllergies),
+                                                documentSnapshot.getString("profilePic")
+                                        );
+                                        Toast.makeText(getContext(), "Changes saved successfully", Toast.LENGTH_LONG).show();
+                                    })
+                                    .addOnFailureListener(e -> Log.e("Firestore", "Update failed", e));
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("Firestore", "Error fetching document", e));
+    }
+
+    private boolean validateInputs() {
+        boolean isValid = true;
+
+        if (isEmpty(babyName)) isValid = false;
+        if (isEmpty(babyBirthday) || !isValidDateFormat(babyBirthday.getText().toString())) {
+            babyBirthday.setError("Invalid date format");
+            isValid = false;
+        }
+        if (isEmpty(babyHeight)) isValid = false;
+        if (isEmpty(babyWeight)) isValid = false;
+        if (isEmpty(babyBlood)) isValid = false;
+
+        return isValid;
+    }
+
+    private boolean isEmpty(EditText editText) {
+        if (editText.getText().toString().trim().isEmpty()) {
+            editText.setError("Field cannot be empty");
+            return true;
+        }
+        return false;
+    }
+
+    private void updateFieldIfChanged(Map<String, Object> updates, String key, String oldValue, String newValue, Consumer<String> onUpdate) {
+        if (!Objects.equals(oldValue, newValue)) {
+            updates.put(key, newValue);
+            onUpdate.accept(newValue);
+        }
+    }
+
+    private String convertTimestampToFormattedString(Timestamp timestamp) {
+        if (timestamp == null) return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+        return dateFormat.format(timestamp.toDate());
     }
 
     public static boolean isValidDateFormat(String dateString) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.getDefault());
-            // Parse the date string strictly with the formatter
             LocalDate.parse(dateString, formatter);
             return true;
         } catch (DateTimeParseException e) {
@@ -265,51 +270,7 @@ public class EditBabyProfile extends Fragment {
         }
     }
 
-    public String convertTimestampToFormattedString(Timestamp timestamp) {
-        if (timestamp == null) {
-            return null; // Handle null timestamp if necessary
-        }
-
-        // Convert the Firestore Timestamp to a Date object
-        Date date = timestamp.toDate();
-
-        // Format the date to "MMM dd, yyyy"
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
-        return dateFormat.format(date);
-    }
-
-    public Timestamp convertFormattedStringToTimestamp(String dateString) {
-        if (dateString == null || dateString.isEmpty()) {
-            return null; // Handle invalid or empty date string
-        }
-
-        try {
-            // Define the same format used for the date string
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
-
-            // Parse the string into a Date object
-            Date date = dateFormat.parse(dateString);
-
-            // Convert the Date object to a Firestore Timestamp
-            return new Timestamp(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.e("DateConversion", "Invalid date format: " + dateString);
-            return null; // Return null if parsing fails
-        }
-    }
-
-
-
-    public String formatAllergies(List<String> allergiesList) {
-        String allergies ="";
-        if (allergiesList != null && !allergiesList.isEmpty()) {
-            // Convert the ArrayList into a comma-separated string
-            allergies = String.join(", ", allergiesList);
-        } else {
-            // Set to null or empty string if the list is null or empty
-            allergies = "";
-        }
-        return allergies;
+    private String formatAllergies(List<String> allergiesList) {
+        return (allergiesList == null || allergiesList.isEmpty()) ? "" : String.join(", ", allergiesList);
     }
 }

@@ -20,10 +20,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_TYPE_INCOMING = 2;
     private List<MessageModel> messageList;
     private String uid;
+    private RecyclerView recyclerView;
 
-    public MessagesAdapter(List<MessageModel> messageList, String uid) {
+    public MessagesAdapter(List<MessageModel> messageList, String uid, RecyclerView recyclerView) {
         this.messageList = messageList;
         this.uid = uid;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -71,6 +73,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int previousSize = this.messageList.size();
         this.messageList.addAll(newMessages);  // Add new messages to the existing list
         notifyItemRangeInserted(previousSize, newMessages.size()); // Notify for new range
+    }
+    public void addMessage(MessageModel message) {
+        this.messageList.add(message); // Add the new message to the list
+        notifyItemInserted(messageList.size() - 1); // Notify that a new item is inserted
+        if (recyclerView != null) {
+            recyclerView.scrollToPosition(messageList.size() - 1); // Scroll to the last message
+        }
     }
 
 

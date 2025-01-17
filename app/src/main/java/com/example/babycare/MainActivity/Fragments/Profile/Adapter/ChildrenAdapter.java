@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.babycare.DataBinding.Model.BabyProfileModel;
 import com.example.babycare.DataBinding.SQLite.MyDatabaseHelper;
 import com.example.babycare.R;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -39,12 +41,14 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageButton edit, delete;
         TextView name;
+        ShapeableImageView baby_pfp;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             edit = itemView.findViewById(R.id.editBaby);
             delete = itemView.findViewById(R.id.deleteChild);
             name = itemView.findViewById(R.id.baby_name);
+            baby_pfp = itemView.findViewById(R.id.baby_pfp);
         }
     }
 
@@ -59,6 +63,10 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull ChildrenAdapter.MyViewHolder holder, int position) {
         holder.name.setText(children.get(position).getName());
+        Glide.with(context)
+                .load(children.get(position).getProfilePic()) // Replace with your drawable resource
+                .into(holder.baby_pfp);
+
 
         holder.edit.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -68,16 +76,8 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
 
         holder.delete.setOnClickListener(v -> {
             if (children.size() > 0) {
-                BabyProfileModel childToDelete = children.get(position);
-                children.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, children.size());
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                Log.d("BABY", "RF" + childToDelete.getName());
-                Log.d("BABY", "RF" + childToDelete.getParent());
-                Log.d("BABY", "RF" + childToDelete.getDob());
 
                 // Get the document ID to delete
 
@@ -87,7 +87,13 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
                         .delete() // Directly delete the document by its ID
                         .addOnSuccessListener(aVoid -> {
                             // Successfully deleted from Firestore
+
+                            BabyProfileModel childToDelete = children.get(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, children.size());
+
                             dbHelper.deleteBabyProfile(children.get(position).getDocumentID());
+                            children.remove(position);
                             Log.d("Firestore", "DocumentSnapshot successfully deleted!");
 
                         })

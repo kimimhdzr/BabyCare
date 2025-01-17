@@ -131,6 +131,7 @@
                 android:id="@+id/babypic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:src="@drawable/homelander"
                 android:scaleType="fitXY" />
 
             <TextView

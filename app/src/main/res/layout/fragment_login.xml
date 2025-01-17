@@ -94,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/signin_submit"
         android:elevation="10dp"
@@ -132,15 +132,19 @@
         android:text="Or continue with"
         android:textColor="#007BFF"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@id/google_signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/create_account" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="175dp"
+        android:id="@+id/google_signup"
+        android:layout_width="225dp"
         android:layout_height="55dp"
+        android:background="@drawable/white_rect_fully_rounded"
+        android:clickable="true"
+        android:elevation="6dp"
+        android:focusable="true"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/textView2"
@@ -149,28 +153,20 @@
         app:layout_constraintTop_toBottomOf="@id/or_continue_with">
 
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
             android:elevation="4dp"
             android:scaleType="center"
             android:src="@drawable/google_color_svgrepo_com__2_" />
 
-        <ImageButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_marginRight="10dp"
-            android:elevation="4dp"
-            android:scaleType="center"
-            android:src="@drawable/facebook_svgrepo_com__2_" />
-
-        <ImageButton
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:elevation="4dp"
-            android:scaleType="center"
-            android:src="@drawable/phone_svgrepo_com" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_rect_fully_rounded"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Continue with Google" />
 
     </LinearLayout>
 
@@ -185,6 +181,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/google_signup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

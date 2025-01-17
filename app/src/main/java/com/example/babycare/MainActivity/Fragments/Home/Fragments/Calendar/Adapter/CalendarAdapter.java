@@ -10,9 +10,13 @@ import com.example.babycare.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
@@ -22,6 +26,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int VIEW_TYPE_EVENT = 1;
     private List<Object> groupedItems; // Mixed list of date strings and events
     private OnEventClickListener eventClickListener;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("d MMMM, yyyy", Locale.getDefault());
+
 
     // Interface for handling click events
     public interface OnEventClickListener {
@@ -61,40 +67,61 @@ public class CalendarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         boolean dateExists = false;
         int insertPosition = -1;
 
-        // Find the position of the date header and check if it exists
-        for (int i = 0; i < groupedItems.size(); i++) {
-            if (groupedItems.get(i) instanceof String && groupedItems.get(i).equals(eventDate)) {
-                dateExists = true;
-                insertPosition = i + 1; // Set position to insert event right after the date header
-                break;
-            }
-        }
+        try {
+            Date newEventDate = DATE_FORMAT.parse(eventDate);
 
-        if (dateExists) {
-            // Find the correct position to insert while maintaining sorted order (optional)
-            for (int i = insertPosition; i < groupedItems.size(); i++) {
-                if (groupedItems.get(i) instanceof CalendarModel) {
-                    CalendarModel existingEvent = (CalendarModel) groupedItems.get(i);
-                    if (existingEvent.getDate().equals(eventDate) &&
-                            newEvent.getStartTime().compareTo(existingEvent.getStartTime()) < 0) {
-                        groupedItems.add(i, newEvent);
-                        notifyDataSetChanged();
-                        return;
+            // Find the correct position to insert the event
+            for (int i = 0; i < groupedItems.size(); i++) {
+                if (groupedItems.get(i) instanceof String) {
+                    String currentDateStr = (String) groupedItems.get(i);
+                    Date currentDate = DATE_FORMAT.parse(currentDateStr);
+
+                    if (currentDate.equals(newEventDate)) {
+                        dateExists = true;
+                        insertPosition = i + 1; // Position to insert under the date header
+                        break;
+                    } else if (newEventDate.before(currentDate)) {
+                        insertPosition = i; // Position to insert the new date header
+                        break;
                     }
-                } else {
-                    break; // Reached the next date header
                 }
             }
 
-            // If not inserted in the loop, append to the end of this date's events
-            groupedItems.add(insertPosition, newEvent);
-        } else {
-            // If the date header doesn't exist, add the date and the event
-            groupedItems.add(eventDate); // Add date header
-            groupedItems.add(newEvent);
-        }
+            if (dateExists) {
+                // Insert event under the existing date header while maintaining order by start time
+                for (int i = insertPosition; i < groupedItems.size(); i++) {
+                    if (groupedItems.get(i) instanceof CalendarModel) {
+                        CalendarModel existingEvent = (CalendarModel) groupedItems.get(i);
+                        if (existingEvent.getDate().equals(eventDate) &&
+                                newEvent.getStartTime().compareTo(existingEvent.getStartTime()) < 0) {
+                            groupedItems.add(i, newEvent);
+                            notifyDataSetChanged();
+                            return;
+                        }
+                    } else {
+                        break; // Reached the next date header
+                    }
+                }
 
-        notifyDataSetChanged();
+                // Append to the end of this date's events if no earlier position is found
+                groupedItems.add(insertPosition, newEvent);
+            } else {
+                // Insert the new date header and the event
+                if (insertPosition == -1) {
+                    // No later date exists, so append at the end
+                    groupedItems.add(eventDate);
+                    groupedItems.add(newEvent);
+                } else {
+                    // Insert the date header and event at the determined position
+                    groupedItems.add(insertPosition, eventDate);
+                    groupedItems.add(insertPosition + 1, newEvent);
+                }
+            }
+
+            notifyDataSetChanged();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     // **Update: Enhanced removeEvent logic to handle date header removal**
